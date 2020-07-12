@@ -1,0 +1,9 @@
+"AddonInfo"
+{
+	"name"        "Generic Currency Value"
+	"version"     "1.0.0"
+	"author_name" "OneStep"
+	"author_url"  ""
+	"info"        "A Generic Currency and Value System for Sandbox"
+	"override"    "0"
+}
