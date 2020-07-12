@@ -2,6 +2,7 @@ CV.SV = CV.SV or {}
 
 CV.SV.HandlePropValue = function(ply, model, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_prop_default"):GetInt()
 
@@ -22,6 +23,7 @@ hook.Add("PlayerSpawnedProp", "sv_handle_prop_value", CV.SV.HandlePropValue)
 
 CV.SV.HandleRagdollValue = function(ply, model, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_ragdoll_default"):GetInt()
 
@@ -42,6 +44,7 @@ hook.Add("PlayerSpawnedRagdoll", "sv_handle_ragdoll_value", CV.SV.HandleRagdollV
 
 CV.SV.HandleSwepValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_swep_default"):GetInt()
 
@@ -59,6 +62,7 @@ hook.Add("PlayerSpawneSWEP", "sv_handle_swep_value", CV.SV.HandleSwepValue)
 
 CV.SV.HandleSwepGiveValue = function(ply, class)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_swep_default"):GetInt()
 
@@ -76,6 +80,7 @@ hook.Add("PlayerGiveSWEP", "sv_handle_swep_give_value", CV.SV.HandleSwepGiveValu
 
 CV.SV.HandleSentValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_swep_default"):GetInt()
 
@@ -96,6 +101,7 @@ hook.Add("PlayerSpawnedSENT", "sv_handle_sent_value", CV.SV.HandleSentValue)
 
 CV.SV.HandleVehicleValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_vehicle_default"):GetInt()
 
@@ -116,6 +122,7 @@ hook.Add("PlayerSpawnedVehicle", "sv_handle_vehicle_value", CV.SV.HandleVehicleV
 
 CV.SV.HandleNPCValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_npc_default"):GetInt()
 
@@ -136,6 +143,7 @@ hook.Add("PlayerSpawnedNPC", "sv_handle_npc_value", CV.SV.HandleNPCValue)
 
 CV.SV.HandleToolValue = function(ply, tr, tool)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
+  if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
   value = GetConVar("gcv_value_tool_default"):GetInt()
 

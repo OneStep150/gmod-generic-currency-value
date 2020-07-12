@@ -73,6 +73,7 @@ CV.SV.SetPlayerCurrencyOnChat = function(ply, msg)
     amount = tonumber(amount)
     if amount and target then
       CV.SV.SetCurrencyToPlayer(target, amount)
+      CV.SV.NotifyPlayer(ply, "Your currency has been set to ".. amount)
     end
   end
 end

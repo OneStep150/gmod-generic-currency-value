@@ -1,3 +1,5 @@
+CV.SV = CV.SV or {}
+
 CV.SV.RewardOnNPCKilled = function(npc)
   if !GetConVar("gcv_reward_enabled"):GetBool() then return end
 
