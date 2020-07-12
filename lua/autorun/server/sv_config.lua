@@ -2,28 +2,28 @@ CV.SV = CV.SV or {}
 CV.SV.Conf = CV.SV.Conf or {}
 CV.SV.FCVARS = { FCVAR_SERVER_CAN_EXECUTE, FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_NOTIFY }
 
-CreateConVar( "gcv_value_enabled", 1, CV.SV.FCVARS)
+CreateConVar("gcv_value_enabled", 1, CV.SV.FCVARS)
+CreateConVar("gcv_reward_enabled", 1, CV.SV.FCVARS)
+CreateConVar("gcv_drop_ondeath_enabled", 1, CV.SV.FCVARS)
 
-CreateConVar( "gcv_drop_ondeath_enabled", 1, CV.SV.FCVARS)
+CreateConVar("gcv_value_prop_default", 50, CV.SV.FCVARS)
+CreateConVar("gcv_value_prop_weight_mul", 2, CV.SV.FCVARS)
 
-CreateConVar( "gcv_value_prop_default", 50, CV.SV.FCVARS)
-CreateConVar( "gcv_value_prop_weight_mul", 2, CV.SV.FCVARS)
+CreateConVar("gcv_value_ragdoll_default", 50, CV.SV.FCVARS)
+CreateConVar("gcv_value_ragdoll_weight_mul", 2, CV.SV.FCVARS)
 
-CreateConVar( "gcv_value_ragdoll_default", 50, CV.SV.FCVARS)
-CreateConVar( "gcv_value_ragdoll_weight_mul", 2, CV.SV.FCVARS)
+CreateConVar("gcv_value_entity_default", 100, CV.SV.FCVARS)
+CreateConVar("gcv_value_entity_weight_mul", 2, CV.SV.FCVARS)
 
-CreateConVar( "gcv_value_entity_default", 100, CV.SV.FCVARS)
-CreateConVar( "gcv_value_entity_weight_mul", 2, CV.SV.FCVARS)
+CreateConVar("gcv_value_vehicle_default", 1000, CV.SV.FCVARS)
+CreateConVar("gcv_value_vehicle_weight_mul", 2, CV.SV.FCVARS)
 
-CreateConVar( "gcv_value_vehicle_default", 1000, CV.SV.FCVARS)
-CreateConVar( "gcv_value_vehicle_weight_mul", 2, CV.SV.FCVARS)
+CreateConVar("gcv_value_npc_default", 1000, CV.SV.FCVARS)
+CreateConVar("gcv_value_npc_health_mul", 2, CV.SV.FCVARS)
 
-CreateConVar( "gcv_value_npc_default", 1000, CV.SV.FCVARS)
-CreateConVar( "gcv_value_npc_health_mul", 2, CV.SV.FCVARS)
+CreateConVar("gcv_value_swep_default", 200, CV.SV.FCVARS)
 
-CreateConVar( "gcv_value_swep_default", 200, CV.SV.FCVARS)
-
-CreateConVar( "gcv_value_tool_default", 10, CV.SV.FCVARS)
+CreateConVar("gcv_value_tool_default", 10, CV.SV.FCVARS)
 
 if !file.Exists("gcv", "DATA") then
   file.CreateDir("gcv")

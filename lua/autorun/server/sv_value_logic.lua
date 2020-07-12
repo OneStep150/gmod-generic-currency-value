@@ -7,10 +7,10 @@ CV.SV.HandlePropValue = function(ply, model, entity)
 
   if CV.SV.Conf.PropValues[model] then
     value = CV.SV.Conf.PropValues[model]
+  else
+    value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_prop_weight_mul"):GetInt()
+    value = math.floor(value)
   end
-
-  value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_prop_weight_mul"):GetInt()
-  value = math.floor(value)
 
   if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
     entity:Remove()
@@ -27,10 +27,10 @@ CV.SV.HandleRagdollValue = function(ply, model, entity)
 
   if CV.SV.Conf.RagdollValues[model] then
     value = CV.SV.Conf.RagdollValues[model]
+  else
+    value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_prop_weight_mul"):GetInt()
+    value = math.floor(value)
   end
-
-  value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_prop_weight_mul"):GetInt()
-  value = math.floor(value)
 
   if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
     entity:Remove()
@@ -81,10 +81,10 @@ CV.SV.HandleSentValue = function(ply, entity)
 
   if CV.SV.Conf.EntityValues[entity:GetClass()] then
     value = CV.SV.Conf.EntityValues[entity:GetClass()]
+  else
+    value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_entity_weight_mul"):GetInt()
+    value = math.floor(value)
   end
-
-  value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_entity_weight_mul"):GetInt()
-  value = math.floor(value)
 
   if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
     entity:Remove()
@@ -101,10 +101,10 @@ CV.SV.HandleVehicleValue = function(ply, entity)
 
   if CV.SV.Conf.VehicleValues[entity:GetClass()] then
     value = CV.SV.Conf.VehicleValues[entity:GetClass()]
+  else
+    value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_vehicle_weight_mul"):GetInt()
+    value = math.floor(value)
   end
-
-  value = value * entity:GetPhysicsObject():GetMass() * GetConVar("gcv_value_vehicle_weight_mul"):GetInt()
-  value = math.floor(value)
 
   if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
     entity:Remove()
@@ -121,10 +121,10 @@ CV.SV.HandleNPCValue = function(ply, entity)
 
   if CV.SV.Conf.NPCValues[entity:GetClass()] then
     value = CV.SV.Conf.NPCValues[entity:GetClass()]
+  else
+    value = value * entity:Health() * GetConVar("gcv_value_npc_health_mul"):GetInt()
+    value = math.floor(value)
   end
-
-  value = value * entity:Health() * GetConVar("gcv_value_npc_health_mul"):GetInt()
-  value = math.floor(value)
 
   if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
     entity:Remove()
