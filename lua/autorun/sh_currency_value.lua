@@ -1,6 +1,7 @@
 CV = CV or {}
 
 CV.Util = CV.Util or {}
+
 CV.Util.FindPlayerByName = function(name)
   target = nil
 

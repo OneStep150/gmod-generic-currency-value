@@ -4,6 +4,8 @@ CV.SV.FCVARS = { FCVAR_SERVER_CAN_EXECUTE, FCVAR_CLIENTCMD_CAN_EXECUTE, FCVAR_NO
 
 CreateConVar( "gcv_value_enabled", 1, CV.SV.FCVARS)
 
+CreateConVar( "gcv_drop_ondeath_enabled", 1, CV.SV.FCVARS)
+
 CreateConVar( "gcv_value_prop_default", 50, CV.SV.FCVARS)
 CreateConVar( "gcv_value_prop_weight_mul", 2, CV.SV.FCVARS)
 

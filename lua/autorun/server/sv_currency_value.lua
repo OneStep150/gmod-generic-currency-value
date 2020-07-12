@@ -79,16 +79,35 @@ end
 
 hook.Add("PlayerSay", "sv_set_player_currency_on_chat", CV.SV.SetPlayerCurrencyOnChat)
 
+CV.SV.DropPlayerCurrencyOnDeath = function(ply)
+  playerCurrency = ply:GetNWInt("Currency")
+
+  if playerCurrency > 0 then
+    CV.SV.CreateCurrencyEntity(ply:GetPos() + Vector(0, 0, 10), playerCurrency)
+  end
+
+  CV.SV.SetCurrencyToPlayer(ply, 0)
+end
+
+hook.Add("PostPlayerDeath", "sv_drop_currency_ondeath", CV.SV.DropPlayerCurrencyOnDeath)
+
+CV.SV.CreateCurrencyEntity = function(pos, amount)
+  currency = ents.Create("currency")
+  currency.CurrencyAmount = amount
+  currency:SetPos(pos)
+  currency:Spawn()
+
+  return currency
+end
+
 CV.SV.DropPlayerCurrency = function(ply, amount)
   if !CV.SV.RemoveCurrencyToPlayer(ply, amount) then
     CV.SV.NotifyPlayer(ply, "You dont have enough to drop ".. amount .. " currency.")
     return
   end
 
-  currency = ents.Create("currency")
-  currency.CurrencyAmount = amount
-  currency:SetPos(ply:EyePos() + ply:GetAimVector() * 30)
-  currency:Spawn()
+  CV.SV.CreateCurrencyEntity(ply:EyePos() + ply:GetAimVector() * 30, amount)
+
 end
 
 CV.SV.AddCurrencyToPlayer = function(ply, amount)
@@ -114,6 +133,4 @@ CV.SV.SetCurrencyToPlayer = function(ply, amount)
   if ply:GetNWInt("Currency") < 0 then
     ply:SetNWInt("Currency", 0)
   end
-
-  CV.SV.NotifyPlayer(ply, "Your currency has been set to ".. amount .. " currency.")
 end
