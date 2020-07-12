@@ -79,6 +79,20 @@ end
 
 hook.Add("PlayerSay", "sv_set_player_currency_on_chat", CV.SV.SetPlayerCurrencyOnChat)
 
+CV.SV.SummonCurrencyEntityOnChat = function(ply, msg)
+  if string.StartWith(msg, "!summon") then
+
+    amount = string.Split(msg, " ")[2]
+    amount = tonumber(amount)
+    if amount then
+      CV.SV.CreateCurrencyEntity(ply:EyePos() + ply:GetAimVector() * 30, amount)
+      CV.SV.NotifyPlayer(ply, "You have summoned ".. amount .." currency.")
+    end
+  end
+end
+
+hook.Add("PlayerSay", "sv_summon_currency_entity_on_chat", CV.SV.SummonCurrencyEntityOnChat)
+
 CV.SV.DropPlayerCurrencyOnDeath = function(ply)
   playerCurrency = ply:GetNWInt("Currency")
 
