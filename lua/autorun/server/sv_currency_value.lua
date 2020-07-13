@@ -97,7 +97,7 @@ CV.SV.RemovePlayerCurrencyOnChat = function(ply, msg)
     amount = string.Split(msg, " ")[3]
     amount = tonumber(amount)
     if amount and target then
-      CV.SV.RemoveCurrencyToPlayer(target, amount)
+      CV.SV.RemoveCurrencyFromPlayer(target, amount)
     end
   end
 end
@@ -113,7 +113,7 @@ CV.SV.SetPlayerCurrencyOnChat = function(ply, msg)
     amount = string.Split(msg, " ")[3]
     amount = tonumber(amount)
     if amount and target then
-      CV.SV.SetCurrencyToPlayer(target, amount)
+      CV.SV.SetCurrencyOfPlayer(target, amount)
       CV.SV.NotifyPlayer(ply, "Your currency has been set to ".. amount)
     end
   end
@@ -143,7 +143,7 @@ CV.SV.DropPlayerCurrencyOnDeath = function(ply)
     CV.SV.CreateCurrencyEntity(ply:GetPos() + Vector(0, 0, 10), playerCurrency)
   end
 
-  CV.SV.SetCurrencyToPlayer(ply, 0)
+  CV.SV.SetCurrencyOfPlayer(ply, 0)
 end
 
 hook.Add("PostPlayerDeath", "sv_drop_currency_ondeath", CV.SV.DropPlayerCurrencyOnDeath)
@@ -158,7 +158,7 @@ CV.SV.CreateCurrencyEntity = function(pos, amount)
 end
 
 CV.SV.DropPlayerCurrency = function(ply, amount)
-  if !CV.SV.RemoveCurrencyToPlayer(ply, amount) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, amount) then
     CV.SV.NotifyPlayer(ply, "You dont have enough to drop ".. amount .. " currency.")
     return
   end
