@@ -574,7 +574,7 @@ end
 
 CV.CL.GUI.ListSelectionTab.ToolSearchFunc = function(self)
   self:GetParent().toAddList:Clear()
-  for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetSweps(self:GetValue())) do
+  for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetTools(self:GetValue())) do
     self:GetParent().toAddList:AddLine(v)
   end
 end
