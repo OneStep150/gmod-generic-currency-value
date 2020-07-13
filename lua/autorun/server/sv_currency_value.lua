@@ -72,6 +72,7 @@ end
 hook.Add("PlayerSay", "sv_drop_player_currency_on_chat", CV.SV.DropPlayerCurrencyOnChat)
 
 CV.SV.AddPlayerCurrencyOnChat = function(ply, msg)
+  if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!add") then
 
     target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
@@ -87,6 +88,7 @@ end
 hook.Add("PlayerSay", "sv_add_player_currency_on_chat", CV.SV.AddPlayerCurrencyOnChat)
 
 CV.SV.RemovePlayerCurrencyOnChat = function(ply, msg)
+  if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!remove") then
 
     target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
@@ -102,6 +104,7 @@ end
 hook.Add("PlayerSay", "sv_remove_player_currency_on_chat", CV.SV.RemovePlayerCurrencyOnChat)
 
 CV.SV.SetPlayerCurrencyOnChat = function(ply, msg)
+  if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!set") then
 
     target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
@@ -118,6 +121,7 @@ end
 hook.Add("PlayerSay", "sv_set_player_currency_on_chat", CV.SV.SetPlayerCurrencyOnChat)
 
 CV.SV.SummonCurrencyEntityOnChat = function(ply, msg)
+  if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!summon") then
 
     amount = string.Split(msg, " ")[2]

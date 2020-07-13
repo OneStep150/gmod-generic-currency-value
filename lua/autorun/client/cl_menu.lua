@@ -4,42 +4,6 @@ CV.CL.GUI = CV.CL.GUI or {}
 CV.CL.GUI.FreeTextSelectionTab = CV.CL.GUI.FreeTextSelectionTab or {}
 CV.CL.GUI.ListSelectionTab = CV.CL.GUI.ListSelectionTab or {}
 
-CV.CL.ValueEnabled = CV.CL.ValueEnabled or {}
-CV.CL.ValueIgnoreAdmins = CV.CL.ValueIgnoreAdmins or {}
-
-CV.CL.PropValues = CV.CL.PropValues or {}
-CV.CL.RagdollValues = CV.CL.RagdollValues or {}
-CV.CL.EntityValues = CV.CL.EntityValues or {}
-CV.CL.VehicleValues = CV.CL.VehicleValues or {}
-CV.CL.NPCValues = CV.CL.NPCValues or {}
-CV.CL.SwepValues = CV.CL.SwepValues or {}
-CV.CL.ToolValues = CV.CL.ToolValues or {}
-
-CV.CL.ResponseData = function()
-  CV.CL.ValueEnabled = net.ReadBool()
-  CV.CL.ValueIgnoreAdmins = net.ReadBool()
-
-  CV.CL.PropValues = net.ReadTable()
-  CV.CL.RagdollValues = net.ReadTable()
-  CV.CL.EntityValues = net.ReadTable()
-  CV.CL.VehicleValues = net.ReadTable()
-  CV.CL.NPCValues = net.ReadTable()
-  CV.CL.SwepValues = net.ReadTable()
-  CV.CL.ToolValues = net.ReadTable()
-
-  CV.CL.GUI.OpenMenu()
-end
-
-net.Receive("cv_transfer_data_response", CV.CL.ResponseData)
-
-CV.CL.RequestData = function()
-  net.Start("cv_transfer_data_request")
-  net.WriteEntity(LocalPlayer())
-  net.SendToServer()
-end
-
-concommand.Add("gcv_menu", CV.CL.RequestData)
-
 CV.CL.GUI.OpenMenu = function()
   frame = vgui.Create("DFrame")
   frame:SetTitle("Generic Currency Value | Menu")
@@ -52,6 +16,7 @@ CV.CL.GUI.OpenMenu = function()
   frame.checkboxValueEnable:SetPos( 25, 50 )
   frame.checkboxValueEnable:SetValue( CV.CL.ValueEnabled )
   frame.checkboxValueEnable.OnChange = function(self)
+    if !LocalPlayer():IsAdmin() then return end
     if self:GetChecked() then bool = 1 else bool = 0 end
 
     net.Start("cv_run_cmd")
@@ -69,6 +34,7 @@ CV.CL.GUI.OpenMenu = function()
   frame.checkboxAdminIgnoreEnable:SetPos( 25, 75 )
   frame.checkboxAdminIgnoreEnable:SetValue( CV.CL.ValueIgnoreAdmins )
   frame.checkboxAdminIgnoreEnable.OnChange = function(self)
+    if !LocalPlayer():IsAdmin() then return end
     if self:GetChecked() then bool = 1 else bool = 0 end
 
     net.Start("cv_run_cmd")
@@ -202,6 +168,8 @@ CV.CL.GUI.AddRagdollCategoryLogic = function(parent)
 end
 
 CV.CL.GUI.LegacyAddButtonAction = function(self, cmd, table)
+  if !LocalPlayer():IsAdmin() then return end
+
   name = self:GetParent().toAddName:GetValue()
   value = self:GetParent().toAddValue:GetValue()
 
@@ -216,6 +184,8 @@ CV.CL.GUI.LegacyAddButtonAction = function(self, cmd, table)
 end
 
 CV.CL.GUI.LegacyUpdateButtonAction = function(self, cmd, table)
+  if !LocalPlayer():IsAdmin() then return end
+
   entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
     name = v:GetValue(1)
@@ -233,6 +203,8 @@ CV.CL.GUI.LegacyUpdateButtonAction = function(self, cmd, table)
 end
 
 CV.CL.GUI.LegacyDeleteButtonAction = function(self, cmd, table)
+  if !LocalPlayer():IsAdmin() then return end
+
   entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
     name = v:GetValue(1)
@@ -437,6 +409,8 @@ CV.CL.GUI.RefreshListTable = function(parent, table)
 end
 
 CV.CL.GUI.AddButtonAction = function(self, cmd, table)
+  if !LocalPlayer():IsAdmin() then return end
+
   entries = self:GetParent().toAddList:GetSelected()
   for i,v in ipairs(entries) do
     name = v:GetValue(1)
@@ -454,6 +428,8 @@ CV.CL.GUI.AddButtonAction = function(self, cmd, table)
 end
 
 CV.CL.GUI.UpdateButtonAction = function(self, cmd, table)
+  if !LocalPlayer():IsAdmin() then return end
+
   entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
     name = v:GetValue(1)
@@ -471,6 +447,8 @@ CV.CL.GUI.UpdateButtonAction = function(self, cmd, table)
 end
 
 CV.CL.GUI.DeleteButtonAction = function(self, cmd, table)
+  if !LocalPlayer():IsAdmin() then return end
+
   entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
     name = v:GetValue(1)
