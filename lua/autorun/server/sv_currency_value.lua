@@ -172,7 +172,7 @@ CV.SV.AddCurrencyToPlayer = function(ply, amount)
   CV.SV.NotifyPlayer(ply, "You have obtained ".. amount .. " currency.")
 end
 
-CV.SV.RemoveCurrencyToPlayer = function(ply, amount)
+CV.SV.RemoveCurrencyFromPlayer = function(ply, amount)
   if ply:GetNWInt("Currency") - amount < 0 then
     return false
   end
@@ -184,7 +184,7 @@ CV.SV.RemoveCurrencyToPlayer = function(ply, amount)
   return true
 end
 
-CV.SV.SetCurrencyToPlayer = function(ply, amount)
+CV.SV.SetCurrencyOfPlayer = function(ply, amount)
   ply:SetNWInt("Currency", amount)
 
   if ply:GetNWInt("Currency") < 0 then

@@ -14,7 +14,7 @@ CV.SV.HandlePropValue = function(ply, model, entity)
     value = math.floor(value)
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     entity:Remove()
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
   end
@@ -35,7 +35,7 @@ CV.SV.HandleRagdollValue = function(ply, model, entity)
     value = math.floor(value)
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     entity:Remove()
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
   end
@@ -53,7 +53,7 @@ CV.SV.HandleSwepValue = function(ply, entity)
     value = CV.SV.Conf.SwepValues[entity:GetClass()]
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     entity:Remove()
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
   end
@@ -71,7 +71,7 @@ CV.SV.HandleSwepGiveValue = function(ply, class)
     value = CV.SV.Conf.SwepValues[class]
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
     return false
   end
@@ -92,7 +92,7 @@ CV.SV.HandleSentValue = function(ply, entity)
     value = math.floor(value)
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     entity:Remove()
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
   end
@@ -113,7 +113,7 @@ CV.SV.HandleVehicleValue = function(ply, entity)
     value = math.floor(value)
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     entity:Remove()
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
   end
@@ -134,7 +134,7 @@ CV.SV.HandleNPCValue = function(ply, entity)
     value = math.floor(value)
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     entity:Remove()
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to spawn this item.")
   end
@@ -152,7 +152,7 @@ CV.SV.HandleToolValue = function(ply, tr, tool)
     value = CV.SV.Conf.ToolValues[tool]
   end
 
-  if !CV.SV.RemoveCurrencyToPlayer(ply, value) then
+  if !CV.SV.RemoveCurrencyFromPlayer(ply, value) then
     CV.SV.NotifyPlayer(ply, "You need ".. value .. " currency to use this tool.")
     return false
   end
