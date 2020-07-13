@@ -26,7 +26,9 @@ end
 
 net.Receive("cv_transfer_data_request", CV.SV.TransferData)
 
-CV.SV.RunCMD = function()
+CV.SV.RunCMD = function(len, ply)
+  if !ply:IsAdmin() then return end
+
   cmd = net.ReadString()
   args = net.ReadTable()
 
