@@ -137,6 +137,7 @@ end
 hook.Add("PlayerSay", "sv_summon_currency_entity_on_chat", CV.SV.SummonCurrencyEntityOnChat)
 
 CV.SV.DropPlayerCurrencyOnDeath = function(ply)
+  if !GetConVar("gcv_drop_ondeath_enabled"):GetBool() then return end
   playerCurrency = ply:GetNWInt("Currency")
 
   if playerCurrency > 0 then
