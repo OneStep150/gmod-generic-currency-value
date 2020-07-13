@@ -1,6 +1,6 @@
 {
 	"title"		:	"Generic Currency Value",
-	"type"		:	"ServerContent",
+	"type"		:	"tool",
 	"tags"		:	[ "roleplay", "fun" ],
 	"ignore"	:
 	[

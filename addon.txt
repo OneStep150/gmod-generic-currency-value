@@ -1,9 +1,0 @@
-"AddonInfo"
-{
-	"name"        "Generic Currency Value"
-	"version"     "1.0.0"
-	"author_name" "OneStep"
-	"author_url"  "https://github.com/OneStep150/gmod_generic_currency_value"
-	"info"        "A Generic Currency and Value System for Sandbox"
-	"override"    "0"
-}
