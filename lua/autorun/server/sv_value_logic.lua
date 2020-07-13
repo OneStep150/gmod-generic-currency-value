@@ -83,7 +83,7 @@ CV.SV.HandleSentValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_swep_default"):GetInt()
+  value = GetConVar("gcv_value_entity_default"):GetInt()
 
   if CV.SV.Conf.EntityValues[entity:GetClass()] then
     value = CV.SV.Conf.EntityValues[entity:GetClass()]
