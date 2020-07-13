@@ -39,7 +39,6 @@ net.Receive("cv_notify_player", CV.CL.DisplaySVNotification)
 
 CV.CL.RequestData = function()
   net.Start("cv_transfer_data_request")
-  net.WriteEntity(LocalPlayer())
   net.SendToServer()
 end
 
