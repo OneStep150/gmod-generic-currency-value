@@ -45,7 +45,7 @@ end
 concommand.Add("gcv_menu", CV.CL.RequestData)
 
 CV.CL.DisplayPlayerCurrency = function(ply, msg)
-  if msg == "!currency" then
+  if msg == "!currency" && ply == LocalPlayer() then
      CV.CL.DisplayCLNotification("Your balance is ".. ply:GetNWInt("Currency") .. " currency.")
   end
 end
