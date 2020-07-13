@@ -1,8 +1,45 @@
+CV = CV or {}
 CV.SV = CV.SV or {}
 
 util.AddNetworkString("cv_init_player_currency")
 util.AddNetworkString("cv_sync_player_currency")
 util.AddNetworkString("cv_notify_player")
+util.AddNetworkString("cv_transfer_data_request")
+util.AddNetworkString("cv_transfer_data_response")
+util.AddNetworkString("cv_run_cmd")
+util.AddNetworkString("cv_save_data")
+
+CV.SV.TransferData = function()
+  ply = net.ReadEntity()
+  net.Start("cv_transfer_data_response")
+  net.WriteBool(GetConVar("gcv_value_enabled"):GetBool())
+  net.WriteBool(GetConVar("gcv_value_ignore_admin"):GetBool())
+  net.WriteTable(CV.SV.Conf.PropValues or {})
+  net.WriteTable(CV.SV.Conf.RagdollValues or {})
+  net.WriteTable(CV.SV.Conf.EntityValues or {})
+  net.WriteTable(CV.SV.Conf.VehicleValues or {})
+  net.WriteTable(CV.SV.Conf.NPCValues or {})
+  net.WriteTable(CV.SV.Conf.SwepValues or {})
+  net.WriteTable(CV.SV.Conf.ToolValues or {})
+  net.Send(ply)
+end
+
+net.Receive("cv_transfer_data_request", CV.SV.TransferData)
+
+CV.SV.RunCMD = function()
+  cmd = net.ReadString()
+  args = net.ReadTable()
+
+  if table.Count(args) == 1 then
+    RunConsoleCommand(cmd, args[1])
+  end
+
+  if table.Count(args) == 2 then
+    RunConsoleCommand(cmd, args[1], (math.floor(args[2])))
+  end
+end
+
+net.Receive("cv_run_cmd", CV.SV.RunCMD)
 
 CV.SV.NotifyPlayer = function(ply, msg)
   net.Start("cv_notify_player")

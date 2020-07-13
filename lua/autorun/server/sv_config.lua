@@ -1,3 +1,4 @@
+CV = CV or {}
 CV.SV = CV.SV or {}
 CV.SV.Conf = CV.SV.Conf or {}
 CV.SV.FCVARS = { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY }
@@ -104,6 +105,8 @@ CV.SV.Conf.AddEntityValueOnCMD = function(ply, cmd, args)
     CV.SV.Conf.AddValue(CV.SV.Conf.EntityValues, args[1], args[2])
     CV.SV.Conf.SaveEntityValue()
   end
+  print(class)
+  print(value)
 end
 
 concommand.Add("gcv_value_entity_add", CV.SV.Conf.AddEntityValueOnCMD)

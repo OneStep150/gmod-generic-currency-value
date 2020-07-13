@@ -1,7 +1,44 @@
+CV = CV or {}
 CV.CL = CV.CL or {}
 CV.CL.GUI = CV.CL.GUI or {}
 CV.CL.GUI.FreeTextSelectionTab = CV.CL.GUI.FreeTextSelectionTab or {}
 CV.CL.GUI.ListSelectionTab = CV.CL.GUI.ListSelectionTab or {}
+
+CV.CL.ValueEnabled = CV.CL.ValueEnabled or {}
+CV.CL.ValueIgnoreAdmins = CV.CL.ValueIgnoreAdmins or {}
+
+CV.CL.PropValues = CV.CL.PropValues or {}
+CV.CL.RagdollValues = CV.CL.RagdollValues or {}
+CV.CL.EntityValues = CV.CL.EntityValues or {}
+CV.CL.VehicleValues = CV.CL.VehicleValues or {}
+CV.CL.NPCValues = CV.CL.NPCValues or {}
+CV.CL.SwepValues = CV.CL.SwepValues or {}
+CV.CL.ToolValues = CV.CL.ToolValues or {}
+
+CV.CL.ResponseData = function()
+  CV.CL.ValueEnabled = net.ReadBool()
+  CV.CL.ValueIgnoreAdmins = net.ReadBool()
+
+  CV.CL.PropValues = net.ReadTable()
+  CV.CL.RagdollValues = net.ReadTable()
+  CV.CL.EntityValues = net.ReadTable()
+  CV.CL.VehicleValues = net.ReadTable()
+  CV.CL.NPCValues = net.ReadTable()
+  CV.CL.SwepValues = net.ReadTable()
+  CV.CL.ToolValues = net.ReadTable()
+
+  CV.CL.GUI.OpenMenu()
+end
+
+net.Receive("cv_transfer_data_response", CV.CL.ResponseData)
+
+CV.CL.RequestData = function()
+  net.Start("cv_transfer_data_request")
+  net.WriteEntity(LocalPlayer())
+  net.SendToServer()
+end
+
+concommand.Add("gcv_menu", CV.CL.RequestData)
 
 CV.CL.GUI.OpenMenu = function()
   frame = vgui.Create("DFrame")
@@ -13,7 +50,15 @@ CV.CL.GUI.OpenMenu = function()
 
   frame.checkboxValueEnable = vgui.Create("DCheckBox", frame)
   frame.checkboxValueEnable:SetPos( 25, 50 )
-  frame.checkboxValueEnable:SetValue( true )
+  frame.checkboxValueEnable:SetValue( CV.CL.ValueEnabled )
+  frame.checkboxValueEnable.OnChange = function(self)
+    if self:GetChecked() then bool = 1 else bool = 0 end
+
+    net.Start("cv_run_cmd")
+    net.WriteString("gcv_value_enabled")
+    net.WriteTable({bool})
+    net.SendToServer()
+  end
 
   frame.labelValueEnable = vgui.Create("DLabel", frame)
   frame.labelValueEnable:SetPos(45, 50)
@@ -22,47 +67,53 @@ CV.CL.GUI.OpenMenu = function()
 
   frame.checkboxAdminIgnoreEnable = vgui.Create("DCheckBox", frame)
   frame.checkboxAdminIgnoreEnable:SetPos( 25, 75 )
-  frame.checkboxAdminIgnoreEnable:SetValue( true )
+  frame.checkboxAdminIgnoreEnable:SetValue( CV.CL.ValueIgnoreAdmins )
+  frame.checkboxAdminIgnoreEnable.OnChange = function(self)
+    if self:GetChecked() then bool = 1 else bool = 0 end
 
-  frame.labelValueEnable = vgui.Create("DLabel", frame)
-  frame.labelValueEnable:SetPos(45, 75)
-  frame.labelValueEnable:SetSize(200, 15)
-  frame.labelValueEnable:SetText("Ignore Value to Spawnables for Admins?")
+    net.Start("cv_run_cmd")
+    net.WriteString("gcv_value_ignore_admin")
+    net.WriteTable({bool})
+    net.SendToServer()
+  end
+
+  frame.labelValueIgnoreEnable = vgui.Create("DLabel", frame)
+  frame.labelValueIgnoreEnable:SetPos(45, 75)
+  frame.labelValueIgnoreEnable:SetSize(200, 15)
+  frame.labelValueIgnoreEnable:SetText("Ignore Value to Spawnables for Admins?")
 
   frame.sheet = vgui.Create("DPropertySheet", frame)
   frame.sheet:SetPos(20, 110)
   frame.sheet:SetSize(985, 385)
 
   frame.propTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("Props", frame.propTab, "icon16/cross.png")
+  frame.sheet:AddSheet("Props", frame.propTab, "icon16/bricks.png")
   CV.CL.GUI.FreeTextSelectionTab.Build(frame.propTab, "prop")
 
   frame.ragdollTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("Ragdolls", frame.ragdollTab, "icon16/cross.png")
+  frame.sheet:AddSheet("Ragdolls", frame.ragdollTab, "icon16/group.png")
   CV.CL.GUI.FreeTextSelectionTab.Build(frame.ragdollTab, "ragdoll")
 
   frame.entityTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("Entity", frame.entityTab, "icon16/cross.png")
+  frame.sheet:AddSheet("Entity", frame.entityTab, "icon16/bomb.png")
   CV.CL.GUI.ListSelectionTab.Build(frame.entityTab, "entity")
 
   frame.vehicleTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("Vehicle", frame.vehicleTab, "icon16/cross.png")
+  frame.sheet:AddSheet("Vehicle", frame.vehicleTab, "icon16/car.png")
   CV.CL.GUI.ListSelectionTab.Build(frame.vehicleTab, "vehicle")
 
   frame.npcTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("NPCs", frame.npcTab, "icon16/cross.png")
+  frame.sheet:AddSheet("NPCs", frame.npcTab, "icon16/user_red.png")
   CV.CL.GUI.ListSelectionTab.Build(frame.npcTab, "npc")
 
   frame.swepTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("SWEPs", frame.swepTab, "icon16/cross.png")
+  frame.sheet:AddSheet("SWEPs", frame.swepTab, "icon16/award_star_silver_3.png")
   CV.CL.GUI.ListSelectionTab.Build(frame.swepTab, "swep")
 
   frame.toolTab = vgui.Create("DPanel", frame.sheet)
-  frame.sheet:AddSheet("Tools", frame.toolTab, "icon16/cross.png")
+  frame.sheet:AddSheet("Tools", frame.toolTab, "icon16/wrench.png")
   CV.CL.GUI.ListSelectionTab.Build(frame.toolTab, "tool")
 end
-
-concommand.Add("gcv_menu", CV.CL.GUI.OpenMenu)
 
 CV.CL.GUI.FreeTextSelectionTab.Build = function(parent, category)
   parent.list = vgui.Create( "DListView", parent )
@@ -111,12 +162,92 @@ CV.CL.GUI.FreeTextSelectionTab.Build = function(parent, category)
   parent.buttonDelete:SetText("Delete")
 
   if category == "prop" then
-
+    CV.CL.GUI.AddPropCategoryLogic(parent)
   end
   if category == "ragdoll" then
-
+    CV.CL.GUI.AddRagdollCategoryLogic(parent)
   end
 end
+
+CV.CL.GUI.AddPropCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.PropValues) do
+    parent.list:AddLine(k, v)
+  end
+
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.LegacyAddButtonAction(self, "gcv_value_prop_add", CV.CL.PropValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.LegacyUpdateButtonAction(self, "gcv_value_prop_add", CV.CL.PropValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.LegacyDeleteButtonAction(self, "gcv_value_prop_remove", CV.CL.PropValues)
+  end
+end
+
+CV.CL.GUI.AddRagdollCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.RagdollValues) do
+    parent.list:AddLine(k, v)
+  end
+
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.LegacyAddButtonAction(self, "gcv_value_ragdoll_add", CV.CL.RagdollValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.LegacyUpdateButtonAction(self, "gcv_value_ragdoll_add", CV.CL.RagdollValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.LegacyDeleteButtonAction(self, "gcv_value_ragdoll_remove", CV.CL.RagdollValues)
+  end
+end
+
+CV.CL.GUI.LegacyAddButtonAction = function(self, cmd, table)
+  name = self:GetParent().toAddName:GetValue()
+  value = self:GetParent().toAddValue:GetValue()
+
+  net.Start("cv_run_cmd")
+  net.WriteString(cmd)
+  net.WriteTable({name, value})
+  net.SendToServer()
+
+  table[name] = value
+
+  CV.CL.GUI.RefreshListTable(self:GetParent(), table)
+end
+
+CV.CL.GUI.LegacyUpdateButtonAction = function(self, cmd, table)
+  entries = self:GetParent().list:GetSelected()
+  for i,v in ipairs(entries) do
+    name = v:GetValue(1)
+    value = self:GetParent().toAddValue:GetValue()
+
+    net.Start("cv_run_cmd")
+    net.WriteString(cmd)
+    net.WriteTable({name, value})
+    net.SendToServer()
+
+    table[name] = value
+  end
+
+  CV.CL.GUI.RefreshListTable(self:GetParent(), table)
+end
+
+CV.CL.GUI.LegacyDeleteButtonAction = function(self, cmd, table)
+  entries = self:GetParent().list:GetSelected()
+  for i,v in ipairs(entries) do
+    name = v:GetValue(1)
+
+    net.Start("cv_run_cmd")
+    net.WriteString(cmd)
+    net.WriteTable({name})
+    net.SendToServer()
+
+    table[name] = nil
+  end
+
+  CV.CL.GUI.RefreshListTable(self:GetParent(), table)
+end
+
 
 CV.CL.GUI.ListSelectionTab.Build = function(parent, category)
   parent.list = vgui.Create( "DListView", parent )
@@ -144,11 +275,11 @@ CV.CL.GUI.ListSelectionTab.Build = function(parent, category)
   parent.labelToAddValue:SetTextColor(Color(0, 0, 0))
   parent.labelToAddValue:SetText("How valuable:")
 
-  parent.ToAddValue = vgui.Create("DNumberWang", parent)
-  parent.ToAddValue:SetPos(725, 195)
-  parent.ToAddValue:SetSize(75, 30)
-  parent.ToAddValue:SetMin(0)
-  parent.ToAddValue:SetMax(1000000)
+  parent.toAddValue = vgui.Create("DNumberWang", parent)
+  parent.toAddValue:SetPos(725, 195)
+  parent.toAddValue:SetSize(75, 30)
+  parent.toAddValue:SetMin(0)
+  parent.toAddValue:SetMax(1000000)
 
   parent.labelSearch = vgui.Create("DLabel", parent)
   parent.labelSearch:SetPos(810, 177)
@@ -194,43 +325,165 @@ CV.CL.GUI.ListSelectionTab.Build = function(parent, category)
 end
 
 CV.CL.GUI.AddEntityCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.EntityValues) do
+    parent.list:AddLine(k, v)
+  end
+
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetEntities()) do
     parent.toAddList:AddLine(v)
   end
 
   parent.search.OnValueChange = CV.CL.GUI.ListSelectionTab.EntitySearchFunc
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.AddButtonAction(self, "gcv_value_entity_add", CV.CL.EntityValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.UpdateButtonAction(self, "gcv_value_entity_add", CV.CL.EntityValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.DeleteButtonAction(self, "gcv_value_entity_remove", CV.CL.EntityValues)
+  end
 end
 
 CV.CL.GUI.AddVehicleCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.VehicleValues) do
+    parent.list:AddLine(k, v)
+  end
+
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetVehicles()) do
     parent.toAddList:AddLine(v)
   end
 
   parent.search.OnValueChange = CV.CL.GUI.ListSelectionTab.VehicleSearchFunc
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.AddButtonAction(self, "gcv_value_vehicle_add", CV.CL.VehicleValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.UpdateButtonAction(self, "gcv_value_vehicle_add", CV.CL.VehicleValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.DeleteButtonAction(self, "gcv_value_vehicle_remove", CV.CL.VehicleValues)
+  end
 end
 
 CV.CL.GUI.AddNPCCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.NPCValues) do
+    parent.list:AddLine(k, v)
+  end
+
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetNPCs()) do
     parent.toAddList:AddLine(v)
   end
 
   parent.search.OnValueChange = CV.CL.GUI.ListSelectionTab.NPCSearchFunc
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.AddButtonAction(self, "gcv_value_npc_add", CV.CL.NPCValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.UpdateButtonAction(self, "gcv_value_npc_add", CV.CL.NPCValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.DeleteButtonAction(self, "gcv_value_npc_remove", CV.CL.NPCValues)
+  end
 end
 
 CV.CL.GUI.AddSwepCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.SwepValues) do
+    parent.list:AddLine(k, v)
+  end
+
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetSweps()) do
     parent.toAddList:AddLine(v)
   end
 
   parent.search.OnValueChange = CV.CL.GUI.ListSelectionTab.SwepSearchFunc
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.AddButtonAction(self, "gcv_value_swep_add", CV.CL.SwepValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.UpdateButtonAction(self, "gcv_value_swep_add", CV.CL.SwepValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.DeleteButtonAction(self, "gcv_value_swep_remove", CV.CL.SwepValues)
+  end
 end
 
 CV.CL.GUI.AddToolCategoryLogic = function(parent)
+  for k,v in pairs(CV.CL.ToolValues) do
+    parent.list:AddLine(k, v)
+  end
+
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetTools()) do
     parent.toAddList:AddLine(v)
   end
 
   parent.search.OnValueChange = CV.CL.GUI.ListSelectionTab.ToolSearchFunc
+  parent.buttonAdd.DoClick = function(self)
+    CV.CL.GUI.AddButtonAction(self, "gcv_value_tool_add", CV.CL.ToolValues)
+  end
+  parent.buttonUpdate.DoClick = function(self)
+    CV.CL.GUI.UpdateButtonAction(self, "gcv_value_tool_add", CV.CL.ToolValues)
+  end
+  parent.buttonDelete.DoClick = function(self)
+    CV.CL.GUI.DeleteButtonAction(self, "gcv_value_tool_remove", CV.CL.ToolValues)
+  end
+end
+
+CV.CL.GUI.RefreshListTable = function(parent, table)
+  parent.list:Clear()
+  for k,v in pairs(table) do
+    parent.list:AddLine(k, v)
+  end
+end
+
+CV.CL.GUI.AddButtonAction = function(self, cmd, table)
+  entries = self:GetParent().toAddList:GetSelected()
+  for i,v in ipairs(entries) do
+    name = v:GetValue(1)
+    value = self:GetParent().toAddValue:GetValue()
+
+    net.Start("cv_run_cmd")
+    net.WriteString(cmd)
+    net.WriteTable({name, value})
+    net.SendToServer()
+
+    table[name] = value
+  end
+
+  CV.CL.GUI.RefreshListTable(self:GetParent(), table)
+end
+
+CV.CL.GUI.UpdateButtonAction = function(self, cmd, table)
+  entries = self:GetParent().list:GetSelected()
+  for i,v in ipairs(entries) do
+    name = v:GetValue(1)
+    value = self:GetParent().toAddValue:GetValue()
+
+    net.Start("cv_run_cmd")
+    net.WriteString(cmd)
+    net.WriteTable({name, value})
+    net.SendToServer()
+
+    table[name] = value
+  end
+
+  CV.CL.GUI.RefreshListTable(self:GetParent(), table)
+end
+
+CV.CL.GUI.DeleteButtonAction = function(self, cmd, table)
+  entries = self:GetParent().list:GetSelected()
+  for i,v in ipairs(entries) do
+    name = v:GetValue(1)
+
+    net.Start("cv_run_cmd")
+    net.WriteString(cmd)
+    net.WriteTable({name})
+    net.SendToServer()
+
+    table[name] = nil
+  end
+
+  CV.CL.GUI.RefreshListTable(self:GetParent(), table)
 end
 
 CV.CL.GUI.ListSelectionTab.GetEntities = function(filter)
@@ -305,7 +558,6 @@ end
 
 CV.CL.GUI.ListSelectionTab.GetTools = function(filter)
   entities = {}
-  PrintTable(spawnmenu.GetTools())
   for i,v in ipairs(spawnmenu.GetTools()) do
     for b, x in ipairs(v.Items) do
       for h, z in ipairs(x) do

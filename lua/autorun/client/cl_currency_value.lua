@@ -1,3 +1,4 @@
+CV = CV or {}
 CV.CL = CV.CL or {}
 
 CV.CL.DisplaySVNotification = function()

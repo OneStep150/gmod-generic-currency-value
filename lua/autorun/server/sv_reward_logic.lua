@@ -1,3 +1,4 @@
+CV = CV or {}
 CV.SV = CV.SV or {}
 
 CV.SV.RewardOnNPCKilled = function(npc)
