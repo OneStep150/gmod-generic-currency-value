@@ -51,7 +51,7 @@ CV.SV.Conf.DeSantiseTable = function(table)
 end
 
 
-CV.SV.Conf.ATMValues = CV.SV.Conf.ATMValues or CV.SV.Conf.DeSantiseTable(util.JSONToTable(file.Read("gcv/atm_values.txt", "DATA") or "") or {})
+CV.SV.Conf.ATMValues = CV.SV.Conf.ATMValues or CV.SV.Conf.DeSantiseTable(util.JSONToTable(file.Read("gcv/atm_values.txt", "DATA") or ""))
 CV.SV.Conf.PropValues = CV.SV.Conf.PropValues or util.JSONToTable(file.Read("gcv/prop_values.txt", "DATA") or "") or {}
 CV.SV.Conf.RagdollValues = CV.SV.Conf.RagdollValues or util.JSONToTable(file.Read("gcv/ragdoll_values.txt", "DATA") or "") or {}
 CV.SV.Conf.EntityValues = CV.SV.Conf.EntityValues or util.JSONToTable(file.Read("gcv/entity_values.txt", "DATA") or "") or {}
@@ -59,8 +59,6 @@ CV.SV.Conf.VehicleValues = CV.SV.Conf.VehicleValues or util.JSONToTable(file.Rea
 CV.SV.Conf.NPCValues = CV.SV.Conf.NPCValues or util.JSONToTable(file.Read("gcv/npc_values.txt", "DATA") or "") or {}
 CV.SV.Conf.SwepValues = CV.SV.Conf.SwepValues or util.JSONToTable(file.Read("gcv/swep_values.txt", "DATA") or "") or {}
 CV.SV.Conf.ToolValues = CV.SV.Conf.ToolValues or util.JSONToTable(file.Read("gcv/tool_values.txt", "DATA") or "") or {}
-
-print(table.ToString(CV.SV.Conf.ATMValues))
 
 CV.SV.Conf.SaveATMValue = function()
   file.Write("gcv/atm_values.txt", util.TableToJSON(CV.SV.Conf.SantiseTable(CV.SV.Conf.ATMValues)))

@@ -28,7 +28,7 @@ hook.Add("HUDPaint", "cl_gcv_drawhud", CV.CL.HUD.Draw)
 
 CV.CL.HUD.ContextMenuOpenCallback = function()
   CV.CL.HUD.ContextMenuOpen = true
-  CV.CL.HUD.GlobalHeightOffset = surface.ScreenHeight() / 2
+  CV.CL.HUD.GlobalHeightOffset = surface.ScreenHeight() / 10
 end
 
 hook.Add("OnContextMenuOpen", "cl_gcv_contextmenu_open_callback", CV.CL.HUD.ContextMenuOpenCallback)
