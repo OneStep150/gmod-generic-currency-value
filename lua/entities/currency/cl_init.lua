@@ -1,14 +1,35 @@
 include('shared.lua')
 
+CV.CL = CV.CL or {}
+CV.CL.ENT = CV.CL.ENT or {}
+CV.CL.ENT.Currency = CV.CL.ENT.Currency or {}
+
+CV.CL.ENT.Currency.TextScale = 0.3
+CV.CL.ENT.Currency.TextMaxDistance = 100
+CV.CL.ENT.Currency.TextPosition = function(ent)
+  return ent:GetPos() + ent:GetUp() * 1 + ent:GetRight() * -0.3
+end
+CV.CL.ENT.Currency.TextPositionBack = function(ent)
+  return ent:GetPos() + ent:GetUp() * 0 + ent:GetRight() * -0.3
+end
+CV.CL.ENT.Currency.TextAngleBack = function(ent)
+return ent:LocalToWorldAngles(Angle(180, 0, 0))
+end
+
 function ENT:Draw()
    self:DrawModel()
 
    distanceToLocalPlayer = LocalPlayer():GetPos():DistToSqr(self:GetPos())
-   --Distance is Squared because of Distance func above, docs say its faster this way.
-   allowedDistance = 50*50
+   allowedDistance = CV.CL.ENT.Currency.TextMaxDistance * CV.CL.ENT.Currency.TextMaxDistance
 
    if self:BeingLookedAtByLocalPlayer() and distanceToLocalPlayer < allowedDistance then
-     AddWorldTip( self:EntIndex(), self:GetNWInt("CurrencyAmount") .. " Currency", 0.5, self:GetPos(), self  )
+     cam.Start3D2D( CV.CL.ENT.Currency.TextPosition(self), self:GetAngles(), CV.CL.ENT.Currency.TextScale )
+     		draw.SimpleTextOutlined( self:GetNWInt("CurrencyAmount"), "DermaDefault", 0, 0, Color(150, 255, 150), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0) )
+   	  cam.End3D2D()
+
+      cam.Start3D2D( CV.CL.ENT.Currency.TextPositionBack(self), CV.CL.ENT.Currency.TextAngleBack(self), CV.CL.ENT.Currency.TextScale )
+         draw.SimpleTextOutlined( self:GetNWInt("CurrencyAmount"), "DermaDefault", 0, 0, Color(150, 255, 150), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0) )
+       cam.End3D2D()
    end
 
 end
