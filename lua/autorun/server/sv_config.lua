@@ -9,6 +9,8 @@ CreateConVar("gcv_drop_ondeath_enabled", 0, CV.SV.FCVARS)
 
 CreateConVar("gcv_value_ignore_admin", 0, CV.SV.FCVARS)
 
+CreateConVar("gcv_currency_maxentities", 50, CV.SV.FCVARS)
+
 CreateConVar("gcv_value_prop_default", 10, CV.SV.FCVARS)
 CreateConVar("gcv_value_prop_weight_mul", 2, CV.SV.FCVARS)
 
