@@ -34,6 +34,24 @@ if !file.Exists("gcv", "DATA") then
   file.CreateDir("gcv")
 end
 
+CV.SV.Conf.SantiseTable = function(table)
+  santiseTable = {}
+  for k,v in pairs(table) do
+    santiseTable[util.Base64Encode(k)] = util.Base64Encode(v)
+  end
+  return santiseTable
+end
+
+CV.SV.Conf.DeSantiseTable = function(table)
+  deSantiseTable = {}
+  for k,v in pairs(table) do
+    deSantiseTable[util.Base64Decode(k)] = util.Base64Decode(v)
+  end
+  return deSantiseTable
+end
+
+
+CV.SV.Conf.ATMValues = CV.SV.Conf.ATMValues or CV.SV.Conf.DeSantiseTable(util.JSONToTable(file.Read("gcv/atm_values.txt", "DATA") or "") or {})
 CV.SV.Conf.PropValues = CV.SV.Conf.PropValues or util.JSONToTable(file.Read("gcv/prop_values.txt", "DATA") or "") or {}
 CV.SV.Conf.RagdollValues = CV.SV.Conf.RagdollValues or util.JSONToTable(file.Read("gcv/ragdoll_values.txt", "DATA") or "") or {}
 CV.SV.Conf.EntityValues = CV.SV.Conf.EntityValues or util.JSONToTable(file.Read("gcv/entity_values.txt", "DATA") or "") or {}
@@ -42,6 +60,11 @@ CV.SV.Conf.NPCValues = CV.SV.Conf.NPCValues or util.JSONToTable(file.Read("gcv/n
 CV.SV.Conf.SwepValues = CV.SV.Conf.SwepValues or util.JSONToTable(file.Read("gcv/swep_values.txt", "DATA") or "") or {}
 CV.SV.Conf.ToolValues = CV.SV.Conf.ToolValues or util.JSONToTable(file.Read("gcv/tool_values.txt", "DATA") or "") or {}
 
+print(table.ToString(CV.SV.Conf.ATMValues))
+
+CV.SV.Conf.SaveATMValue = function()
+  file.Write("gcv/atm_values.txt", util.TableToJSON(CV.SV.Conf.SantiseTable(CV.SV.Conf.ATMValues)))
+end
 CV.SV.Conf.SavePropValue = function()
   file.Write("gcv/prop_values.txt", util.TableToJSON(CV.SV.Conf.PropValues))
 end
@@ -71,6 +94,34 @@ end
 CV.SV.Conf.RemoveValue = function(tValues, class)
   tValues[class] = nil
 end
+
+CV.SV.Conf.AddATMValueOnCMD = function(ply, cmd, args)
+  class = tostring(args[1])
+  value = tonumber(args[2])
+  if class and value then
+    CV.SV.Conf.AddValue(CV.SV.Conf.ATMValues, args[1], args[2])
+    CV.SV.Conf.SaveATMValue()
+  end
+end
+
+concommand.Add("gcv_value_atm_add", CV.SV.Conf.AddATMValueOnCMD)
+
+CV.SV.Conf.RemoveATMValueOnCMD = function(ply, cmd, args)
+  class = tostring(args[1])
+  if class then
+    CV.SV.Conf.RemoveValue(CV.SV.Conf.ATMValues, class)
+    CV.SV.Conf.SaveATMValue()
+  end
+end
+
+concommand.Add("gcv_value_atm_remove", CV.SV.Conf.RemoveATMValueOnCMD)
+
+CV.SV.Conf.ClearATMValueOnCMD = function(ply, cmd, args)
+  table.Empty(CV.SV.Conf.ATMValues)
+  CV.SV.Conf.SaveATMValue()
+end
+
+concommand.Add("gcv_value_atm_clear", CV.SV.Conf.ClearATMValueOnCMD)
 
 CV.SV.Conf.AddPropValueOnCMD = function(ply, cmd, args)
   class = tostring(args[1])
