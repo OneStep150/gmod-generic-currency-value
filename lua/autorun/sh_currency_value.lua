@@ -13,3 +13,7 @@ CV.Util.FindPlayerByName = function(name)
 
   return target
 end
+
+CV.Util.ComformCurrencyAmount = function(amount)
+  return math.floor(amount)
+end

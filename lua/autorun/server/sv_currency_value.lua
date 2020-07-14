@@ -36,7 +36,7 @@ CV.SV.RunCMD = function(len, ply)
   end
 
   if table.Count(args) == 2 then
-    RunConsoleCommand(cmd, args[1], (math.floor(args[2])))
+    RunConsoleCommand(cmd, args[1], args[2])
   end
 end
 
@@ -151,7 +151,7 @@ hook.Add("PostPlayerDeath", "sv_drop_currency_ondeath", CV.SV.DropPlayerCurrency
 
 CV.SV.CreateCurrencyEntity = function(pos, amount)
   currency = ents.Create("currency")
-  currency.CurrencyAmount = amount
+  currency.CurrencyAmount = CV.Util.ComformCurrencyAmount(amount)
   currency:SetPos(pos)
   currency:Spawn()
 
@@ -169,11 +169,13 @@ CV.SV.DropPlayerCurrency = function(ply, amount)
 end
 
 CV.SV.AddCurrencyToPlayer = function(ply, amount)
+  amount = CV.Util.ComformCurrencyAmount(amount)
   ply:SetNWInt("Currency", ply:GetNWInt("Currency") + amount or amount)
   CV.SV.NotifyPlayer(ply, "You have obtained ".. amount .. " currency.")
 end
 
 CV.SV.RemoveCurrencyFromPlayer = function(ply, amount)
+  amount = CV.Util.ComformCurrencyAmount(amount)
   if ply:GetNWInt("Currency") - amount < 0 then
     return false
   end
@@ -186,6 +188,7 @@ CV.SV.RemoveCurrencyFromPlayer = function(ply, amount)
 end
 
 CV.SV.SetCurrencyOfPlayer = function(ply, amount)
+  amount = CV.Util.ComformCurrencyAmount(amount)
   ply:SetNWInt("Currency", amount)
 
   if ply:GetNWInt("Currency") < 0 then

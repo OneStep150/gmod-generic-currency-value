@@ -109,6 +109,7 @@ CV.CL.GUI.FreeTextSelectionTab.Build = function(parent, category)
   parent.toAddValue = vgui.Create("DNumberWang", parent)
   parent.toAddValue:SetPos(725, 100)
   parent.toAddValue:SetSize(150, 30)
+  parent.toAddValue:SetDecimals(0)
   parent.toAddValue:SetMin(0)
   parent.toAddValue:SetMax(1000000)
 
@@ -137,7 +138,7 @@ end
 
 CV.CL.GUI.AddPropCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.PropValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   parent.buttonAdd.DoClick = function(self)
@@ -153,7 +154,7 @@ end
 
 CV.CL.GUI.AddRagdollCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.RagdollValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   parent.buttonAdd.DoClick = function(self)
@@ -171,7 +172,7 @@ CV.CL.GUI.LegacyAddButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
   name = self:GetParent().toAddName:GetValue()
-  value = self:GetParent().toAddValue:GetValue()
+  value = CV.Util.ComformCurrencyAmount(self:GetParent().toAddValue:GetValue())
 
   net.Start("cv_run_cmd")
   net.WriteString(cmd)
@@ -250,6 +251,7 @@ CV.CL.GUI.ListSelectionTab.Build = function(parent, category)
   parent.toAddValue = vgui.Create("DNumberWang", parent)
   parent.toAddValue:SetPos(725, 195)
   parent.toAddValue:SetSize(75, 30)
+  parent.toAddValue:SetDecimals(0)
   parent.toAddValue:SetMin(0)
   parent.toAddValue:SetMax(1000000)
 
@@ -298,7 +300,7 @@ end
 
 CV.CL.GUI.AddEntityCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.EntityValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetEntities()) do
@@ -319,7 +321,7 @@ end
 
 CV.CL.GUI.AddVehicleCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.VehicleValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetVehicles()) do
@@ -340,7 +342,7 @@ end
 
 CV.CL.GUI.AddNPCCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.NPCValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetNPCs()) do
@@ -361,7 +363,7 @@ end
 
 CV.CL.GUI.AddSwepCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.SwepValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetSweps()) do
@@ -382,7 +384,7 @@ end
 
 CV.CL.GUI.AddToolCategoryLogic = function(parent)
   for k,v in pairs(CV.CL.ToolValues) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetTools()) do
@@ -404,7 +406,7 @@ end
 CV.CL.GUI.RefreshListTable = function(parent, table)
   parent.list:Clear()
   for k,v in pairs(table) do
-    parent.list:AddLine(k, v)
+    CV.CL.GUI.AddToListComform(parent.list, k, v)
   end
 end
 
@@ -555,4 +557,8 @@ CV.CL.GUI.ListSelectionTab.ToolSearchFunc = function(self)
   for i,v in ipairs(CV.CL.GUI.ListSelectionTab.GetTools(self:GetValue())) do
     self:GetParent().toAddList:AddLine(v)
   end
+end
+
+CV.CL.GUI.AddToListComform = function(list, name, value)
+  list:AddLine(name, CV.Util.ComformCurrencyAmount(value))
 end
