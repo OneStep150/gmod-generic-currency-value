@@ -150,7 +150,7 @@ end
 hook.Add("PostPlayerDeath", "sv_drop_currency_ondeath", CV.SV.DropPlayerCurrencyOnDeath)
 
 CV.SV.CreateCurrencyEntity = function(pos, amount)
-  currency = ents.Create("currency")
+  currency = ents.Create("gcv_currency")
   currency.CurrencyAmount = CV.Util.ComformCurrencyAmount(amount)
   currency:SetPos(pos)
   currency:Spawn()
