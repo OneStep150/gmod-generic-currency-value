@@ -14,7 +14,7 @@ CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = CV.CL.ENT.ATM.GUI.CurrencyPersonalOff
 CV.CL.ENT.ATM.GUI.CurrencyATMOffset = CV.CL.ENT.ATM.GUI.CurrencyATMOffset or 0
 
 CV.CL.ENT.ATM.GUI.OpenMenu = function()
-  frame = vgui.Create("DFrame")
+  local frame = vgui.Create("DFrame")
   frame:SetTitle("Generic Currency Value | ATM")
   frame:SetSize(512, 512)
   frame:Center()
@@ -100,11 +100,11 @@ end
 net.Receive("cv_atm_response_data", CV.CL.ENT.ATM.ResponseData)
 
 CV.CL.ENT.ATM.GUI.DepositResponse = function()
-  successful = net.ReadBool()
+  local successful = net.ReadBool()
 
-  if successful and frame then
-    frame.labelCurrencyValue:SetText(frame.labelCurrencyValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset)
-    frame.labelCurrencyATMValue:SetText(frame.labelCurrencyATMValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyATMOffset)
+  if successful and CV.CL.ENT.ATM.GUI.Frame then
+    CV.CL.ENT.ATM.GUI.Frame.labelCurrencyValue:SetText(CV.CL.ENT.ATM.GUI.Frame.labelCurrencyValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset)
+    CV.CL.ENT.ATM.GUI.Frame.labelCurrencyATMValue:SetText(CV.CL.ENT.ATM.GUI.Frame.labelCurrencyATMValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyATMOffset)
   else
     CV.CL.DisplayCLNotification("You don't have enough currency to deposit this amount.")
   end
@@ -113,11 +113,11 @@ end
 net.Receive("cv_atm_deposit_response", CV.CL.ENT.ATM.GUI.DepositResponse)
 
 CV.CL.ENT.ATM.GUI.WithdrawResponse = function()
-  successful = net.ReadBool()
+  local successful = net.ReadBool()
 
-  if successful and frame then
-    frame.labelCurrencyValue:SetText(frame.labelCurrencyValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset)
-    frame.labelCurrencyATMValue:SetText(frame.labelCurrencyATMValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyATMOffset)
+  if successful and CV.CL.ENT.ATM.GUI.Frame then
+    CV.CL.ENT.ATM.GUI.Frame.labelCurrencyValue:SetText(CV.CL.ENT.ATM.GUI.Frame.labelCurrencyValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset)
+    CV.CL.ENT.ATM.GUI.Frame.labelCurrencyATMValue:SetText(CV.CL.ENT.ATM.GUI.Frame.labelCurrencyATMValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyATMOffset)
   else
     CV.CL.DisplayCLNotification("You don't have enough currency to withdraw this amount.")
   end
@@ -126,11 +126,11 @@ end
 net.Receive("cv_atm_withdraw_response", CV.CL.ENT.ATM.GUI.WithdrawResponse)
 
 CV.CL.ENT.ATM.GUI.TransferResponse = function()
-  successful = net.ReadBool()
+  local successful = net.ReadBool()
 
-  if successful and frame then
-    frame.labelCurrencyValue:SetText(frame.labelCurrencyValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset)
-    frame.labelCurrencyATMValue:SetText(frame.labelCurrencyATMValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyATMOffset)
+  if successful and CV.CL.ENT.ATM.GUI.Frame then
+    CV.CL.ENT.ATM.GUI.Frame.labelCurrencyValue:SetText(CV.CL.ENT.ATM.GUI.Frame.labelCurrencyValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset)
+    CV.CL.ENT.ATM.GUI.Frame.labelCurrencyATMValue:SetText(CV.CL.ENT.ATM.GUI.Frame.labelCurrencyATMValue:GetValue() + CV.CL.ENT.ATM.GUI.CurrencyATMOffset)
     CV.CL.DisplayCLNotification("You have transfered the specified amount of currency.")
   else
     CV.CL.DisplayCLNotification("You don't have enough currency to transfer this amount.")
@@ -140,7 +140,7 @@ end
 net.Receive("cv_atm_transfer_response", CV.CL.ENT.ATM.GUI.TransferResponse)
 
 CV.CL.ENT.ATM.GUI.DepositButton = function()
-  amount = frame.toAddValue:GetValue()
+  local amount = CV.CL.ENT.ATM.GUI.Frame.toAddValue:GetValue()
 
   CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = -amount
   CV.CL.ENT.ATM.GUI.CurrencyATMOffset = amount
@@ -152,7 +152,7 @@ CV.CL.ENT.ATM.GUI.DepositButton = function()
 end
 
 CV.CL.ENT.ATM.GUI.WithdrawButton = function()
-  amount = frame.toAddValue:GetValue()
+  local amount = CV.CL.ENT.ATM.GUI.Frame.toAddValue:GetValue()
 
   CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = amount
   CV.CL.ENT.ATM.GUI.CurrencyATMOffset = -amount
@@ -164,16 +164,16 @@ CV.CL.ENT.ATM.GUI.WithdrawButton = function()
 end
 
 CV.CL.ENT.ATM.GUI.TransferButton = function()
-  if table.Count(frame.list:GetSelected()) != 0 then
-    ply = CV.Util.FindPlayerByName(table.GetFirstValue(frame.list:GetSelected()):GetValue(1))
-    steamid = ply:SteamID64()
+  if table.Count(CV.CL.ENT.ATM.GUI.Frame.list:GetSelected()) != 0 then
+    local ply = CV.Util.FindPlayerByName(table.GetFirstValue(CV.CL.ENT.ATM.GUI.Frame.list:GetSelected()):GetValue(1))
+    local steamid = ply:SteamID64()
 
     if !steamid then
       CV.CL.DisplayCLNotification("Invalid target, cant transfer currency. (Possibly a Bot?)")
       return
     end
 
-    amount = frame.toAddValue:GetValue()
+    local amount = frame.toAddValue:GetValue()
 
     CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = 0
     CV.CL.ENT.ATM.GUI.CurrencyATMOffset = -amount
@@ -192,15 +192,15 @@ CV.CL.ENT.ATM.TextPosition = function(ent)
   return ent:GetPos() + ent:GetUp() * 50 + ent:GetRight() * -3
 end
 CV.CL.ENT.ATM.TextAngle = function(ent)
-  targetAngle = (LocalPlayer():GetPos() - ent:GetPos()):Angle()
+  local targetAngle = (LocalPlayer():GetPos() - ent:GetPos()):Angle()
   return Angle(0, 90 + targetAngle.yaw, 90)
 end
 
 function ENT:Draw()
    self:DrawModel()
 
-   distanceToLocalPlayer = LocalPlayer():GetPos():DistToSqr(self:GetPos())
-   allowedDistance = CV.CL.ENT.ATM.TextMaxDistance * CV.CL.ENT.ATM.TextMaxDistance
+   local distanceToLocalPlayer = LocalPlayer():GetPos():DistToSqr(self:GetPos())
+   local allowedDistance = CV.CL.ENT.ATM.TextMaxDistance * CV.CL.ENT.ATM.TextMaxDistance
 
    if self:BeingLookedAtByLocalPlayer() and distanceToLocalPlayer < allowedDistance then
      cam.Start3D2D( CV.CL.ENT.ATM.TextPosition(self), CV.CL.ENT.ATM.TextAngle(self), CV.CL.ENT.ATM.TextScale )

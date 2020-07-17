@@ -28,8 +28,8 @@ net.Receive("cv_transfer_data_request", CV.SV.TransferData)
 CV.SV.RunCMD = function(len, ply)
   if !ply:IsAdmin() then return end
 
-  cmd = net.ReadString()
-  args = net.ReadTable()
+  local cmd = net.ReadString()
+  local args = net.ReadTable()
 
   if table.Count(args) == 1 then
     RunConsoleCommand(cmd, args[1])
@@ -62,7 +62,7 @@ hook.Add("PlayerInitialSpawn", "sv_player_init", CV.SV.PlayerInit)
 
 CV.SV.DropPlayerCurrencyOnChat = function(ply, msg)
   if string.StartWith(msg, "!drop") then
-    amount = string.Split(msg, " ")[2]
+    local amount = string.Split(msg, " ")[2]
     amount = tonumber(amount)
     if amount then
       CV.SV.DropPlayerCurrency(ply, amount)
@@ -76,9 +76,9 @@ CV.SV.AddPlayerCurrencyOnChat = function(ply, msg)
   if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!add") then
 
-    target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
+    local target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
 
-    amount = string.Split(msg, " ")[3]
+    local amount = string.Split(msg, " ")[3]
     amount = tonumber(amount)
     if amount and target then
       CV.SV.AddCurrencyToPlayer(target, amount)
@@ -92,9 +92,9 @@ CV.SV.RemovePlayerCurrencyOnChat = function(ply, msg)
   if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!remove") then
 
-    target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
+    local target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
 
-    amount = string.Split(msg, " ")[3]
+    local amount = string.Split(msg, " ")[3]
     amount = tonumber(amount)
     if amount and target then
       CV.SV.RemoveCurrencyFromPlayer(target, amount)
@@ -108,9 +108,9 @@ CV.SV.SetPlayerCurrencyOnChat = function(ply, msg)
   if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!set") then
 
-    target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
+    local target = CV.Util.FindPlayerByName(string.Split(msg, " ")[2])
 
-    amount = string.Split(msg, " ")[3]
+    local amount = string.Split(msg, " ")[3]
     amount = tonumber(amount)
     if amount and target then
       CV.SV.SetCurrencyOfPlayer(target, amount)
@@ -125,7 +125,7 @@ CV.SV.SummonCurrencyEntityOnChat = function(ply, msg)
   if !ply:IsAdmin() then return end
   if string.StartWith(msg, "!summon") then
 
-    amount = string.Split(msg, " ")[2]
+    local amount = string.Split(msg, " ")[2]
     amount = tonumber(amount)
     if amount then
       CV.SV.CreateCurrencyEntity(ply:EyePos() + ply:GetAimVector() * 30, amount)
@@ -138,7 +138,7 @@ hook.Add("PlayerSay", "sv_summon_currency_entity_on_chat", CV.SV.SummonCurrencyE
 
 CV.SV.DropPlayerCurrencyOnDeath = function(ply)
   if !GetConVar("gcv_drop_ondeath_enabled"):GetBool() then return end
-  playerCurrency = ply:GetNWInt("Currency")
+  local playerCurrency = ply:GetNWInt("Currency")
 
   if playerCurrency > 0 then
     CV.SV.CreateCurrencyEntity(ply:GetPos() + Vector(0, 0, 10), playerCurrency)
@@ -150,7 +150,7 @@ end
 hook.Add("PostPlayerDeath", "sv_drop_currency_ondeath", CV.SV.DropPlayerCurrencyOnDeath)
 
 CV.SV.CreateCurrencyEntity = function(pos, amount)
-  currency = ents.Create("gcv_currency")
+  local currency = ents.Create("gcv_currency")
   currency.CurrencyAmount = CV.Util.ComformCurrencyAmount(amount)
   currency:SetPos(pos)
   currency:Spawn()
@@ -169,13 +169,13 @@ CV.SV.DropPlayerCurrency = function(ply, amount)
 end
 
 CV.SV.AddCurrencyToPlayer = function(ply, amount)
-  amount = CV.Util.ComformCurrencyAmount(amount)
+  local amount = CV.Util.ComformCurrencyAmount(amount)
   ply:SetNWInt("Currency", ply:GetNWInt("Currency") + amount or amount)
   CV.SV.NotifyPlayer(ply, "You have obtained ".. amount .. " currency.")
 end
 
 CV.SV.RemoveCurrencyFromPlayer = function(ply, amount)
-  amount = CV.Util.ComformCurrencyAmount(amount)
+  local amount = CV.Util.ComformCurrencyAmount(amount)
   if ply:GetNWInt("Currency") - amount < 0 then
     return false
   end
@@ -188,7 +188,7 @@ CV.SV.RemoveCurrencyFromPlayer = function(ply, amount)
 end
 
 CV.SV.SetCurrencyOfPlayer = function(ply, amount)
-  amount = CV.Util.ComformCurrencyAmount(amount)
+  local amount = CV.Util.ComformCurrencyAmount(amount)
   ply:SetNWInt("Currency", amount)
 
   if ply:GetNWInt("Currency") < 0 then

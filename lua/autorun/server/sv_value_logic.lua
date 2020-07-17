@@ -5,7 +5,7 @@ CV.SV.HandlePropValue = function(ply, model, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_prop_default"):GetInt()
+  local value = GetConVar("gcv_value_prop_default"):GetInt()
 
   if CV.SV.Conf.PropValues[model] then
     value = CV.SV.Conf.PropValues[model]
@@ -26,7 +26,7 @@ CV.SV.HandleRagdollValue = function(ply, model, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_ragdoll_default"):GetInt()
+  local value = GetConVar("gcv_value_ragdoll_default"):GetInt()
 
   if CV.SV.Conf.RagdollValues[model] then
     value = CV.SV.Conf.RagdollValues[model]
@@ -47,7 +47,7 @@ CV.SV.HandleSwepValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_swep_default"):GetInt()
+  local value = GetConVar("gcv_value_swep_default"):GetInt()
 
   if CV.SV.Conf.SwepValues[entity:GetClass()] then
     value = CV.SV.Conf.SwepValues[entity:GetClass()]
@@ -65,7 +65,7 @@ CV.SV.HandleSwepGiveValue = function(ply, class)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_swep_default"):GetInt()
+  local value = GetConVar("gcv_value_swep_default"):GetInt()
 
   if CV.SV.Conf.SwepValues[class] then
     value = CV.SV.Conf.SwepValues[class]
@@ -83,7 +83,7 @@ CV.SV.HandleSentValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_entity_default"):GetInt()
+  local value = GetConVar("gcv_value_entity_default"):GetInt()
 
   if CV.SV.Conf.EntityValues[entity:GetClass()] then
     value = CV.SV.Conf.EntityValues[entity:GetClass()]
@@ -104,7 +104,7 @@ CV.SV.HandleVehicleValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_vehicle_default"):GetInt()
+  local value = GetConVar("gcv_value_vehicle_default"):GetInt()
 
   if CV.SV.Conf.VehicleValues[entity:GetClass()] then
     value = CV.SV.Conf.VehicleValues[entity:GetClass()]
@@ -125,7 +125,7 @@ CV.SV.HandleNPCValue = function(ply, entity)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_npc_default"):GetInt()
+  local value = GetConVar("gcv_value_npc_default"):GetInt()
 
   if CV.SV.Conf.NPCValues[entity:GetClass()] then
     value = CV.SV.Conf.NPCValues[entity:GetClass()]
@@ -146,7 +146,7 @@ CV.SV.HandleToolValue = function(ply, tr, tool)
   if !GetConVar("gcv_value_enabled"):GetBool() then return end
   if GetConVar("gcv_value_ignore_admin"):GetBool() and ply:IsAdmin() then return end
 
-  value = GetConVar("gcv_value_tool_default"):GetInt()
+  local value = GetConVar("gcv_value_tool_default"):GetInt()
 
   if CV.SV.Conf.ToolValues[tool] then
     value = CV.SV.Conf.ToolValues[tool]

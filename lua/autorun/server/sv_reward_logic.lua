@@ -4,7 +4,7 @@ CV.SV = CV.SV or {}
 CV.SV.RewardOnNPCKilled = function(npc)
   if !GetConVar("gcv_reward_enabled"):GetBool() then return end
 
-  value = GetConVar("gcv_value_npc_default"):GetInt()
+  local value = GetConVar("gcv_value_npc_default"):GetInt()
 
   if CV.SV.Conf.NPCValues[npc:GetClass()] then
     value = CV.SV.Conf.NPCValues[npc:GetClass()]

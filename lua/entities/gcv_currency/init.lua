@@ -15,7 +15,7 @@ end
 
 CV.SV.ENT.Currency.HandleEntityLimit = function()
 	if table.Count(CV.SV.ENT.Currency.Ents) > GetConVar("gcv_currency_maxentities"):GetInt() then
-		ent = table.GetFirstValue(CV.SV.ENT.Currency.Ents)
+		local ent = table.GetFirstValue(CV.SV.ENT.Currency.Ents)
 		table.RemoveByValue(CV.SV.ENT.Currency.Ents, ent)
 		ent:Remove()
 	end

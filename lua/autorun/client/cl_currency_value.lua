@@ -30,7 +30,7 @@ end
 net.Receive("cv_transfer_data_response", CV.CL.ResponseData)
 
 CV.CL.DisplaySVNotification = function()
-  msg = net.ReadString()
+  local msg = net.ReadString()
   notification.AddLegacy(msg, NOTIFY_GENERIC, 4 )
   surface.PlaySound("buttons/blip1.wav")
 end

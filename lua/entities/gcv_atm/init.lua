@@ -21,15 +21,13 @@ CV.SV.ENT = CV.SV.ENT or {}
 CV.SV.ENT.ATM = CV.SV.ENT.ATM or {}
 
 CV.SV.ENT.ATM.Deposit = function(len, ply)
-	steamid = net.ReadString()
-	amount = net.ReadInt(32)
+	local steamid = net.ReadString()
+	local amount = net.ReadInt(32)
 
-	print(amount)
-
-	successful = false
+	local successful = false
 
 	if CV.SV.RemoveCurrencyFromPlayer(ply, amount) then
-		atmBalance = CV.SV.Conf.ATMValues[steamid] or 0
+		local atmBalance = CV.SV.Conf.ATMValues[steamid] or 0
 		atmBalance = atmBalance + amount
 		CV.SV.Conf.AddValue(CV.SV.Conf.ATMValues, steamid, atmBalance)
 		CV.SV.Conf.SaveATMValue()
@@ -44,12 +42,12 @@ end
 net.Receive("cv_atm_deposit_request", CV.SV.ENT.ATM.Deposit)
 
 CV.SV.ENT.ATM.Withdraw = function(len, ply)
-	steamid = net.ReadString()
-	amount = net.ReadInt(32)
+	local steamid = net.ReadString()
+	local amount = net.ReadInt(32)
 
-	successful = false
+	local successful = false
 
-	atmBalance = CV.SV.Conf.ATMValues[steamid] or 0
+	local atmBalance = CV.SV.Conf.ATMValues[steamid] or 0
 	if atmBalance - amount >= 0 then
 		atmBalance = atmBalance - amount
 		CV.SV.AddCurrencyToPlayer(ply, amount)
@@ -66,15 +64,14 @@ end
 net.Receive("cv_atm_withdraw_request", CV.SV.ENT.ATM.Withdraw)
 
 CV.SV.ENT.ATM.Transfer = function(len, ply)
-	steamid = net.ReadString()
-	amount = net.ReadInt(32)
+	local steamid = net.ReadString()
+	local amount = net.ReadInt(32)
 
-	successful = false
+	local successful = false
 
-	atmBalance = CV.SV.Conf.ATMValues[ply:SteamID64()] or 0
-	targetATMBalance = CV.SV.Conf.ATMValues[steamid] or 0
+	local atmBalance = CV.SV.Conf.ATMValues[ply:SteamID64()] or 0
+	local targetATMBalance = CV.SV.Conf.ATMValues[steamid] or 0
 
-	print(atmBalance - amount)
 	if atmBalance - amount >= 0 then
 		atmBalance = atmBalance - amount
 		targetATMBalance = targetATMBalance + amount

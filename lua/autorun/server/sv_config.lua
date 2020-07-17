@@ -30,12 +30,15 @@ CreateConVar("gcv_value_swep_default", 5000, CV.SV.FCVARS)
 
 CreateConVar("gcv_value_tool_default", 5, CV.SV.FCVARS)
 
+CreateConVar("gcv_value_objective_min", 100, CV.SV.FCVARS)
+CreateConVar("gcv_value_objective_max", 1000, CV.SV.FCVARS)
+
 if !file.Exists("gcv", "DATA") then
   file.CreateDir("gcv")
 end
 
 CV.SV.Conf.SantiseTable = function(table)
-  santiseTable = {}
+  local santiseTable = {}
   for k,v in pairs(table) do
     santiseTable[util.Base64Encode(k)] = util.Base64Encode(v)
   end
@@ -43,7 +46,7 @@ CV.SV.Conf.SantiseTable = function(table)
 end
 
 CV.SV.Conf.DeSantiseTable = function(table)
-  deSantiseTable = {}
+  local deSantiseTable = {}
   for k,v in pairs(table) do
     deSantiseTable[util.Base64Decode(k)] = util.Base64Decode(v)
   end
@@ -94,8 +97,8 @@ CV.SV.Conf.RemoveValue = function(tValues, class)
 end
 
 CV.SV.Conf.AddATMValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.ATMValues, args[1], args[2])
     CV.SV.Conf.SaveATMValue()
@@ -105,7 +108,7 @@ end
 concommand.Add("gcv_value_atm_add", CV.SV.Conf.AddATMValueOnCMD)
 
 CV.SV.Conf.RemoveATMValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.ATMValues, class)
     CV.SV.Conf.SaveATMValue()
@@ -122,8 +125,8 @@ end
 concommand.Add("gcv_value_atm_clear", CV.SV.Conf.ClearATMValueOnCMD)
 
 CV.SV.Conf.AddPropValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.PropValues, args[1], args[2])
     CV.SV.Conf.SavePropValue()
@@ -133,7 +136,7 @@ end
 concommand.Add("gcv_value_prop_add", CV.SV.Conf.AddPropValueOnCMD)
 
 CV.SV.Conf.RemovePropValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.PropValues, class)
     CV.SV.Conf.SavePropValue()
@@ -150,20 +153,18 @@ end
 concommand.Add("gcv_value_prop_clear", CV.SV.Conf.ClearPropValueOnCMD)
 
 CV.SV.Conf.AddEntityValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.EntityValues, args[1], args[2])
     CV.SV.Conf.SaveEntityValue()
   end
-  print(class)
-  print(value)
 end
 
 concommand.Add("gcv_value_entity_add", CV.SV.Conf.AddEntityValueOnCMD)
 
 CV.SV.Conf.RemoveEntityValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.EntityValues, class)
     CV.SV.Conf.SaveEntityValue()
@@ -180,8 +181,8 @@ end
 concommand.Add("gcv_value_entity_clear", CV.SV.Conf.ClearEntityValueOnCMD)
 
 CV.SV.Conf.AddToolValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.ToolValues, args[1], args[2])
     CV.SV.Conf.SaveToolValue()
@@ -191,7 +192,7 @@ end
 concommand.Add("gcv_value_tool_add", CV.SV.Conf.AddToolValueOnCMD)
 
 CV.SV.Conf.RemoveToolValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.ToolValues, class)
     CV.SV.Conf.SaveToolValue()
@@ -208,8 +209,8 @@ end
 concommand.Add("gcv_value_tool_clear", CV.SV.Conf.ClearToolValueOnCMD)
 
 CV.SV.Conf.AddSwepValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.SwepValues, args[1], args[2])
     CV.SV.Conf.SaveSwepValue()
@@ -219,7 +220,7 @@ end
 concommand.Add("gcv_value_swep_add", CV.SV.Conf.AddSwepValueOnCMD)
 
 CV.SV.Conf.RemoveSwepValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.SwepValues, class)
     CV.SV.Conf.SaveSwepValue()
@@ -236,8 +237,8 @@ end
 concommand.Add("gcv_value_swep_clear", CV.SV.Conf.ClearSwepValueOnCMD)
 
 CV.SV.Conf.AddVehicleValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.VehicleValues, args[1], args[2])
     CV.SV.Conf.SaveVehicleValue()
@@ -247,7 +248,7 @@ end
 concommand.Add("gcv_value_vehicle_add", CV.SV.Conf.AddVehicleValueOnCMD)
 
 CV.SV.Conf.RemoveVehicleValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.VehicleValues, class)
     CV.SV.Conf.SaveVehicleValue()
@@ -264,8 +265,8 @@ end
 concommand.Add("gcv_value_vehicle_clear", CV.SV.Conf.ClearVehicleValueOnCMD)
 
 CV.SV.Conf.AddNPCValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.NPCValues, args[1], args[2])
     CV.SV.Conf.SaveNPCValue()
@@ -275,7 +276,7 @@ end
 concommand.Add("gcv_value_npc_add", CV.SV.Conf.AddNPCValueOnCMD)
 
 CV.SV.Conf.RemoveNPCValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.NPCValues, class)
     CV.SV.Conf.SaveNPCValue()
@@ -292,8 +293,8 @@ end
 concommand.Add("gcv_value_npc_clear", CV.SV.Conf.ClearNPCValueOnCMD)
 
 CV.SV.Conf.AddRagdollValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
-  value = tonumber(args[2])
+  local class = tostring(args[1])
+  local value = tonumber(args[2])
   if class and value then
     CV.SV.Conf.AddValue(CV.SV.Conf.RagdollValues, args[1], args[2])
     CV.SV.Conf.SaveRagdollValue()
@@ -303,7 +304,7 @@ end
 concommand.Add("gcv_value_ragdoll_add", CV.SV.Conf.AddRagdollValueOnCMD)
 
 CV.SV.Conf.RemoveRagdollValueOnCMD = function(ply, cmd, args)
-  class = tostring(args[1])
+  local class = tostring(args[1])
   if class then
     CV.SV.Conf.RemoveValue(CV.SV.Conf.RagdollValues, class)
     CV.SV.Conf.SaveRagdollValue()

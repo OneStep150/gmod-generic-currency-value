@@ -5,7 +5,7 @@ CV.CL.GUI.FreeTextSelectionTab = CV.CL.GUI.FreeTextSelectionTab or {}
 CV.CL.GUI.ListSelectionTab = CV.CL.GUI.ListSelectionTab or {}
 
 CV.CL.GUI.OpenMenu = function()
-  frame = vgui.Create("DFrame")
+  local frame = vgui.Create("DFrame")
   frame:SetTitle("Generic Currency Value | Menu")
   frame:SetSize(1024, 512)
   frame:Center()
@@ -171,8 +171,8 @@ end
 CV.CL.GUI.LegacyAddButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
-  name = self:GetParent().toAddName:GetValue()
-  value = CV.Util.ComformCurrencyAmount(self:GetParent().toAddValue:GetValue())
+  local name = self:GetParent().toAddName:GetValue()
+  local value = CV.Util.ComformCurrencyAmount(self:GetParent().toAddValue:GetValue())
 
   net.Start("cv_run_cmd")
   net.WriteString(cmd)
@@ -187,10 +187,10 @@ end
 CV.CL.GUI.LegacyUpdateButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
-  entries = self:GetParent().list:GetSelected()
+  local entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
-    name = v:GetValue(1)
-    value = self:GetParent().toAddValue:GetValue()
+    local name = v:GetValue(1)
+    local value = self:GetParent().toAddValue:GetValue()
 
     net.Start("cv_run_cmd")
     net.WriteString(cmd)
@@ -206,9 +206,9 @@ end
 CV.CL.GUI.LegacyDeleteButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
-  entries = self:GetParent().list:GetSelected()
+  local entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
-    name = v:GetValue(1)
+    local name = v:GetValue(1)
 
     net.Start("cv_run_cmd")
     net.WriteString(cmd)
@@ -413,10 +413,10 @@ end
 CV.CL.GUI.AddButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
-  entries = self:GetParent().toAddList:GetSelected()
+  local entries = self:GetParent().toAddList:GetSelected()
   for i,v in ipairs(entries) do
-    name = v:GetValue(1)
-    value = self:GetParent().toAddValue:GetValue()
+    local name = v:GetValue(1)
+    local value = self:GetParent().toAddValue:GetValue()
 
     net.Start("cv_run_cmd")
     net.WriteString(cmd)
@@ -432,10 +432,10 @@ end
 CV.CL.GUI.UpdateButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
-  entries = self:GetParent().list:GetSelected()
+  local entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
-    name = v:GetValue(1)
-    value = self:GetParent().toAddValue:GetValue()
+    local name = v:GetValue(1)
+    local value = self:GetParent().toAddValue:GetValue()
 
     net.Start("cv_run_cmd")
     net.WriteString(cmd)
@@ -451,9 +451,9 @@ end
 CV.CL.GUI.DeleteButtonAction = function(self, cmd, table)
   if !LocalPlayer():IsAdmin() then return end
 
-  entries = self:GetParent().list:GetSelected()
+  local entries = self:GetParent().list:GetSelected()
   for i,v in ipairs(entries) do
-    name = v:GetValue(1)
+    local name = v:GetValue(1)
 
     net.Start("cv_run_cmd")
     net.WriteString(cmd)
@@ -467,7 +467,7 @@ CV.CL.GUI.DeleteButtonAction = function(self, cmd, table)
 end
 
 CV.CL.GUI.ListSelectionTab.GetEntities = function(filter)
-  entities = {}
+  local entities = {}
   for i,v in ipairs(scripted_ents.GetSpawnable()) do
     if !filter or string.match(v.ClassName, ".*"..filter..".*") then
       table.insert(entities, v.ClassName)
@@ -484,7 +484,7 @@ CV.CL.GUI.ListSelectionTab.EntitySearchFunc = function(self)
 end
 
 CV.CL.GUI.ListSelectionTab.GetVehicles = function(filter)
-  entities = {}
+  local entities = {}
   for i,v in ipairs(table.GetKeys((list.Get("Vehicles")))) do
     if !filter or string.match(v, ".*"..filter..".*") then
       table.insert(entities, v)
@@ -501,7 +501,7 @@ CV.CL.GUI.ListSelectionTab.VehicleSearchFunc = function(self)
 end
 
 CV.CL.GUI.ListSelectionTab.GetNPCs = function(filter)
-  entities = {}
+  local entities = {}
   for k,v in pairs(list.Get("NPC")) do
     if !filter or string.match(v.Class, ".*"..filter..".*") then
       if !table.HasValue(entities, v.Class) then
@@ -520,7 +520,7 @@ CV.CL.GUI.ListSelectionTab.NPCSearchFunc = function(self)
 end
 
 CV.CL.GUI.ListSelectionTab.GetSweps = function(filter)
-  entities = {}
+  local entities = {}
   for i,v in ipairs(weapons.GetList()) do
     if !filter or string.match(v.ClassName, ".*"..filter..".*") then
       table.insert(entities, v.ClassName)
@@ -537,7 +537,7 @@ CV.CL.GUI.ListSelectionTab.SwepSearchFunc = function(self)
 end
 
 CV.CL.GUI.ListSelectionTab.GetTools = function(filter)
-  entities = {}
+  local entities = {}
   for i,v in ipairs(spawnmenu.GetTools()) do
     for b, x in ipairs(v.Items) do
       for h, z in ipairs(x) do

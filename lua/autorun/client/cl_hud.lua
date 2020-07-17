@@ -19,6 +19,7 @@ CV.CL.HUD.GlobalHeightOffset = 0
 CV.CL.HUD.Draw = function ()
   if !GetConVar("gcv_hud_enabled"):GetBool() then return end
   if GetConVar("gcv_hud_draw_on_contextmenu"):GetBool() and !CV.CL.HUD.ContextMenuOpen then return end
+
 	draw.RoundedBox(15, surface.ScreenWidth() - CV.CL.HUD.BoxWidth - CV.CL.HUD.BoxMargin, 5 + CV.CL.HUD.GlobalHeightOffset, CV.CL.HUD.BoxWidth, CV.CL.HUD.BoxHeight, Color(51, 58, 51, 255))
 	draw.SimpleText("Currency:", "gcv_hud_font", surface.ScreenWidth() - CV.CL.HUD.TextHWidth, CV.CL.HUD.TextHeight + CV.CL.HUD.GlobalHeightOffset, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
   draw.SimpleText(LocalPlayer():GetNWInt("Currency"), "gcv_hud_font", surface.ScreenWidth() - CV.CL.HUD.Text2HWidth, CV.CL.HUD.Text2Height + CV.CL.HUD.GlobalHeightOffset, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
