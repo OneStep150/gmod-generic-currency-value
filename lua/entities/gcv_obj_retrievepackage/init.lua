@@ -25,9 +25,9 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 
-  CV.SV.Node.GenerateNodeDataFromFile()
-
-	print(table.ToString(CV.SV.Node.Data))
+	if !CV.SV.Node.Data then
+  	CV.SV.Node.GenerateNodeDataFromFile()
+	end
 
 	local pos = table.Random(CV.SV.Node.Data).pos
 	self:SetPos(pos + Vector(0, 0, 20))
