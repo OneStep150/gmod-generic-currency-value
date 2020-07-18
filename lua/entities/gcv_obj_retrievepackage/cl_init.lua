@@ -23,9 +23,10 @@ function ENT:Draw()
    self:DrawModel()
 
    if GetConVar("gcv_objective_drawpos"):GetBool() then
-     cam.IgnoreZ(true)
      cam.Start3D2D(CV.CL.ENT.Objective.RetrievePackage.TextPosition(self), CV.CL.ENT.Objective.RetrievePackage.TextAngle(self), CV.CL.ENT.Objective.RetrievePackage.TextScale(self))
+         cam.IgnoreZ(true)
          draw.SimpleTextOutlined( "Retrieve!", "DermaDefault", 0, 0, Color(255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0) )
+         cam.IgnoreZ(false)
      cam.End3D2D()
    end
 end
