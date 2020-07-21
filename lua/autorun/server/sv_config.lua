@@ -38,6 +38,8 @@ if !file.Exists("gcv", "DATA") then
 end
 
 CV.SV.Conf.SantiseTable = function(table)
+  if !table then return null end
+
   local santiseTable = {}
   for k,v in pairs(table) do
     santiseTable[util.Base64Encode(k)] = util.Base64Encode(v)
@@ -46,6 +48,8 @@ CV.SV.Conf.SantiseTable = function(table)
 end
 
 CV.SV.Conf.DeSantiseTable = function(table)
+  if !table then return null end
+
   local deSantiseTable = {}
   for k,v in pairs(table) do
     deSantiseTable[util.Base64Decode(k)] = util.Base64Decode(v)
@@ -54,7 +58,7 @@ CV.SV.Conf.DeSantiseTable = function(table)
 end
 
 
-CV.SV.Conf.ATMValues = CV.SV.Conf.ATMValues or CV.SV.Conf.DeSantiseTable(util.JSONToTable(file.Read("gcv/atm_values.txt", "DATA") or ""))
+CV.SV.Conf.ATMValues = CV.SV.Conf.ATMValues or CV.SV.Conf.DeSantiseTable(util.JSONToTable(file.Read("gcv/atm_values.txt", "DATA") or "")) or {}
 CV.SV.Conf.PropValues = CV.SV.Conf.PropValues or util.JSONToTable(file.Read("gcv/prop_values.txt", "DATA") or "") or {}
 CV.SV.Conf.RagdollValues = CV.SV.Conf.RagdollValues or util.JSONToTable(file.Read("gcv/ragdoll_values.txt", "DATA") or "") or {}
 CV.SV.Conf.EntityValues = CV.SV.Conf.EntityValues or util.JSONToTable(file.Read("gcv/entity_values.txt", "DATA") or "") or {}
