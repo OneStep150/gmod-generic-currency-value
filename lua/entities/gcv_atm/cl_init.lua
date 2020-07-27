@@ -173,7 +173,7 @@ CV.CL.ENT.ATM.GUI.TransferButton = function()
       return
     end
 
-    local amount = frame.toAddValue:GetValue()
+    local amount = CV.CL.ENT.ATM.GUI.Frame.toAddValue:GetValue()
 
     CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = 0
     CV.CL.ENT.ATM.GUI.CurrencyATMOffset = -amount
