@@ -31,8 +31,7 @@ net.Receive("cv_transfer_data_response", CV.CL.ResponseData)
 
 CV.CL.DisplaySVNotification = function()
   local msg = net.ReadString()
-  notification.AddLegacy(msg, NOTIFY_GENERIC, 4 )
-  surface.PlaySound("buttons/blip1.wav")
+  CV.CL.DisplayCLNotification(msg)
 end
 
 net.Receive("cv_notify_player", CV.CL.DisplaySVNotification)
@@ -53,6 +52,9 @@ end
 hook.Add("OnPlayerChat", "cl_print_player_currency_on_chat", CV.CL.DisplayPlayerCurrency)
 
 CV.CL.DisplayCLNotification = function(msg)
+  if !GetConVar("gcv_notification_enabled"):GetBool() then return end
   notification.AddLegacy("[Generic Currency Value] ".. msg, NOTIFY_GENERIC, 4 )
+
+  if !GetConVar("gcv_notification_sound_enabled"):GetBool() then return end
   surface.PlaySound("buttons/blip1.wav")
 end

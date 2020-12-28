@@ -4,7 +4,10 @@ CV.SV.Conf = CV.SV.Conf or {}
 CV.SV.FCVARS = { FCVAR_SERVER_CAN_EXECUTE, FCVAR_NOTIFY, FCVAR_ARCHIVE }
 
 CreateConVar("gcv_value_enabled", 0, CV.SV.FCVARS)
+
 CreateConVar("gcv_reward_enabled", 0, CV.SV.FCVARS)
+CreateConVar("gcv_reward_autopickup_enabled", 0, CV.SV.FCVARS)
+
 CreateConVar("gcv_drop_ondeath_enabled", 0, CV.SV.FCVARS)
 
 CreateConVar("gcv_value_ignore_admin", 0, CV.SV.FCVARS)

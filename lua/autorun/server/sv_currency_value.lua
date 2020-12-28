@@ -44,13 +44,13 @@ net.Receive("cv_run_cmd", CV.SV.RunCMD)
 
 CV.SV.NotifyPlayer = function(ply, msg)
   net.Start("cv_notify_player")
-  net.WriteString("[Generic Currency Value] ".. msg)
+  net.WriteString(msg)
   net.Send(ply)
 end
 
 CV.SV.NotfiyAll = function(msg)
   net.Start("cv_notify_player")
-  net.WriteString("[Generic Currency Value] ".. msg)
+  net.WriteString(msg)
   net.Broadcast()
 end
 

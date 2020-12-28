@@ -1,7 +1,7 @@
 CV = CV or {}
 CV.SV = CV.SV or {}
 
-CV.SV.RewardOnNPCKilled = function(npc)
+CV.SV.RewardOnNPCKilled = function(npc, killer)
   if !GetConVar("gcv_reward_enabled"):GetBool() then return end
 
   local value = GetConVar("gcv_value_npc_default"):GetInt()
@@ -13,7 +13,13 @@ CV.SV.RewardOnNPCKilled = function(npc)
     value = math.floor(value)
   end
 
-  CV.SV.CreateCurrencyEntity(npc:GetPos() + Vector(0, 0, 10), value)
+  if GetConVar("gcv_reward_autopickup_enabled"):GetBool() then
+    if !killer:IsValid() then return end
+    if !killer:IsPlayer() then return end
+    CV.SV.AddCurrencyToPlayer(killer, value)
+  else
+    CV.SV.CreateCurrencyEntity(npc:GetPos() + Vector(0, 0, 10), value)
+  end
 end
 
 hook.Add("OnNPCKilled", "sv_reward_on_npc_killed", CV.SV.RewardOnNPCKilled)
