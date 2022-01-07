@@ -169,13 +169,16 @@ CV.SV.DropPlayerCurrency = function(ply, amount)
 end
 
 CV.SV.AddCurrencyToPlayer = function(ply, amount)
-  local amount = CV.Util.ComformCurrencyAmount(amount)
+  amount = math.abs(amount)
+  amount = CV.Util.ComformCurrencyAmount(amount)
   ply:SetNWInt("Currency", ply:GetNWInt("Currency") + amount or amount)
   CV.SV.NotifyPlayer(ply, "You have obtained ".. amount .. " currency.")
 end
 
 CV.SV.RemoveCurrencyFromPlayer = function(ply, amount)
-  local amount = CV.Util.ComformCurrencyAmount(amount)
+  amount = math.abs(amount)
+
+  amount = CV.Util.ComformCurrencyAmount(amount)
   if ply:GetNWInt("Currency") - amount < 0 then
     return false
   end
