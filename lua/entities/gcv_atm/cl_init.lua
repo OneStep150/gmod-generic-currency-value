@@ -141,6 +141,7 @@ net.Receive("cv_atm_transfer_response", CV.CL.ENT.ATM.GUI.TransferResponse)
 
 CV.CL.ENT.ATM.GUI.DepositButton = function()
   local amount = CV.CL.ENT.ATM.GUI.Frame.toAddValue:GetValue()
+  amount = math.abs(amount)
 
   CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = -amount
   CV.CL.ENT.ATM.GUI.CurrencyATMOffset = amount
@@ -153,6 +154,7 @@ end
 
 CV.CL.ENT.ATM.GUI.WithdrawButton = function()
   local amount = CV.CL.ENT.ATM.GUI.Frame.toAddValue:GetValue()
+  amount = math.abs(amount)
 
   CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = amount
   CV.CL.ENT.ATM.GUI.CurrencyATMOffset = -amount
@@ -174,6 +176,7 @@ CV.CL.ENT.ATM.GUI.TransferButton = function()
     end
 
     local amount = CV.CL.ENT.ATM.GUI.Frame.toAddValue:GetValue()
+    amount = math.abs(amount)
 
     CV.CL.ENT.ATM.GUI.CurrencyPersonalOffset = 0
     CV.CL.ENT.ATM.GUI.CurrencyATMOffset = -amount

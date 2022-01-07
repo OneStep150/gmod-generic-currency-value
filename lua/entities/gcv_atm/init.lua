@@ -23,6 +23,7 @@ CV.SV.ENT.ATM = CV.SV.ENT.ATM or {}
 CV.SV.ENT.ATM.Deposit = function(len, ply)
 	local steamid = net.ReadString()
 	local amount = net.ReadInt(32)
+	amount = math.abs(amount)
 
 	local successful = false
 
@@ -44,6 +45,7 @@ net.Receive("cv_atm_deposit_request", CV.SV.ENT.ATM.Deposit)
 CV.SV.ENT.ATM.Withdraw = function(len, ply)
 	local steamid = net.ReadString()
 	local amount = net.ReadInt(32)
+	amount = math.abs(amount)
 
 	local successful = false
 
@@ -66,6 +68,7 @@ net.Receive("cv_atm_withdraw_request", CV.SV.ENT.ATM.Withdraw)
 CV.SV.ENT.ATM.Transfer = function(len, ply)
 	local steamid = net.ReadString()
 	local amount = net.ReadInt(32)
+	amount = math.abs(amount)
 
 	local successful = false
 
